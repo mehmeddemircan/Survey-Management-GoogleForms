@@ -1,14 +1,25 @@
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Question = require("../models/Question");
 const Survey = require("../models/Survey");
-
+const cloudinary = require('cloudinary')
 // Create a new survey
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
     const { title, description, questions, responses } = req.body;
+
+    const result = await cloudinary.uploader.upload(req.body.image);
+    
+    const image = result.secure_url;
+    
+  
+    res.status(200).json({
+      message: "Successfully added brand",
+    });
+
     const survey = new Survey({
       title,
       description,
+      image,
       questions,
       responses,
     });
@@ -33,7 +44,7 @@ exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
         const totalSurveys = await Survey.countDocuments();
     
         // Get surveys with pagination using skip and limit
-        const surveys = await Survey.find().skip(skip).limit(parseInt(limit)).select('title description');
+        const surveys = await Survey.find().skip(skip).limit(parseInt(limit)).select('title description image');
     
         res.status(200).json({ data: surveys, totalSurveys });
       } catch (error) {
