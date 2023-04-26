@@ -3,7 +3,7 @@ const Question = require("../models/Question");
 const Survey = require("../models/Survey");
 
 exports.createQuestion = catchAsyncErrors(async (req, res) => {
-  const { surveyId, questionType, questionText, options, isRequired } =
+  const { surveyId, questionType, questionText, choices, isRequired } =
     req.body;
 
   try {
@@ -11,7 +11,7 @@ exports.createQuestion = catchAsyncErrors(async (req, res) => {
       surveyId,
       questionType,
       questionText,
-      options,
+      choices,
       isRequired,
     });
 
@@ -30,7 +30,7 @@ exports.createQuestion = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.toggleQuestionIsRequired =catchAsyncErrors(async (req, res) => {
+exports.toggleQuestionIsRequired = catchAsyncErrors(async (req, res) => {
   const { questionId } = req.params; // Assuming you have questionId in request params
 
   try {
@@ -49,12 +49,10 @@ exports.toggleQuestionIsRequired =catchAsyncErrors(async (req, res) => {
     await question.save();
 
     // Return the updated question
-    return res
-      .status(200)
-      .json({
-        question,
-        message: "Sorunun zorunlu alan gerekliliği güncellendi",
-      });
+    return res.status(200).json({
+      question,
+      message: "Sorunun zorunlu alan gerekliliği güncellendi",
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "İç sunucu hatası" });
@@ -62,48 +60,66 @@ exports.toggleQuestionIsRequired =catchAsyncErrors(async (req, res) => {
 });
 
 exports.deleteQuestion = catchAsyncErrors(async (req, res) => {
-    const { surveyId, questionId } = req.params; // Assuming you have surveyId and questionId in request params
-  
-    try {
-      // Find the question by ID
-      const question = await Question.findById(questionId);
-  
-      // Check if the question exists
-      if (!question) {
-        return res.status(404).json({ error: 'Soru bulunamadı' });
-      }
-  
-      // Find the corresponding survey by ID
-      const survey = await Survey.findById(surveyId);
-  
-      // Check if the survey exists
-      if (!survey) {
-        return res.status(404).json({ error: 'Anket bulunamadı' });
-      }
-  
-      // Find the index of the question in the questions array in the survey
-      const questionIndex = survey.questions.findIndex(
-        (question) => question.toString() === questionId
-      );
-  
-      // Check if the question exists in the survey
-      if (questionIndex === -1) {
-        return res.status(404).json({ error: 'Ankette istediğiniz soru bulunamadı' });
-      }
-  
-      // Remove the question from the questions array in the survey
-      survey.questions.splice(questionIndex, 1);
-  
-      // Save the updated survey
-      await survey.save();
-  
-      // Delete the question
-      await Question.findByIdAndDelete(questionId);
-  
-      // Return success message
-      return res.status(200).json({ message: 'Soru başarıyla silindi' });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'İç sunucu hatası' });
+  const { surveyId, questionId } = req.params; // Assuming you have surveyId and questionId in request params
+
+  try {
+    // Find the question by ID
+    const question = await Question.findById(questionId);
+
+    // Check if the question exists
+    if (!question) {
+      return res.status(404).json({ error: "Soru bulunamadı" });
     }
-  });
+
+    // Find the corresponding survey by ID
+    const survey = await Survey.findById(surveyId);
+
+    // Check if the survey exists
+    if (!survey) {
+      return res.status(404).json({ error: "Anket bulunamadı" });
+    }
+
+    // Find the index of the question in the questions array in the survey
+    const questionIndex = survey.questions.findIndex(
+      (question) => question.toString() === questionId
+    );
+
+    // Check if the question exists in the survey
+    if (questionIndex === -1) {
+      return res
+        .status(404)
+        .json({ error: "Ankette istediğiniz soru bulunamadı" });
+    }
+
+    // Remove the question from the questions array in the survey
+    survey.questions.splice(questionIndex, 1);
+
+    // Save the updated survey
+    await survey.save();
+
+    // Delete the question
+    await Question.findByIdAndDelete(questionId);
+
+    // Return success message
+    return res.status(200).json({ message: "Soru başarıyla silindi" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "İç sunucu hatası" });
+  }
+});
+exports.getSurveyQuestions = catchAsyncErrors(async (req, res) => {
+  try {
+    const survey = await Survey.findById(req.params.surveyId).populate('questions','questionType questionText options isRequired '); // Use Mongoose's findById method to find the survey by its ID, and populate the 'questions' field with the associated questions
+    if (!survey) {
+      return res.status(404).json({ message: 'Survey not found' });
+    }
+    const questions = survey.questions; // Access the questions array from the retrieved survey object
+    return res.status(200).json({ questions });
+  
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+

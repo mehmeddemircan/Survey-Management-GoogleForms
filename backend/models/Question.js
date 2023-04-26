@@ -11,7 +11,8 @@ const questionSchema = new mongoose.Schema(
     }, // Anket referansı
      // Soru tipi (kısa yanıt, paragraf, çoktan seçmeli, vb.)
     questionType: { 
-        type: String, 
+        type: String,
+        enum: ['coktanSecmeli', 'kisaYanit', 'uzunYanit'],
         required: true 
     },
     // Soru metni
@@ -29,6 +30,7 @@ const questionSchema = new mongoose.Schema(
         type: Boolean,
         default : false 
     },
+    
   },
   { timestamps: true }
 );

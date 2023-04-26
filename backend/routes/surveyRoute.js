@@ -7,6 +7,7 @@ const {
   getSurveyDetails,
   updateSurvey,
   getResponsesBySurveyId,
+  saveResponses,
 } = require("../controllers/surveyController");
 const {
   isRequestValidated,

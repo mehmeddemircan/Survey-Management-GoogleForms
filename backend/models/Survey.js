@@ -10,9 +10,12 @@ const surveySchema = new mongoose.Schema(
     description: { 
         type: String 
     },
+    category : {
+      type : ObjectId,
+      ref : 'Category'
+    },
     image : {
-      type : String,
-      required : true 
+      type : String
     },
     // Soru referansları (Question modeline referans)
     questions: [

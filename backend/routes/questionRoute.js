@@ -1,5 +1,8 @@
 var express = require('express');
-const { createQuestion, toggleQuestionIsRequired, deleteQuestion } = require('../controllers/questionController');
+const { createQuestion, toggleQuestionIsRequired, deleteQuestion, getSurveyQuestions } = require('../controllers/questionController');
+
+
+
 
 
 
@@ -10,5 +13,6 @@ router
   .route("/surveys/questions/:questionId/changeIsRequired")
   .put(toggleQuestionIsRequired);
 router.route('/surveys/:surveyId/questions/:questionId/delete').delete(deleteQuestion)
+router.route('/surveys/:surveyId/questions').get(getSurveyQuestions)
 
 module.exports = router;

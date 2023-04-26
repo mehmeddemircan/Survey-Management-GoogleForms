@@ -1,61 +1,32 @@
 const Response = require("../models/Response");
 const Survey = require("../models/Survey");
 
+
 exports.createResponse = async (req, res) => {
-    const { surveyId, questionId, response } = req.body;
-  
-    try {
-      // Create a new response object
-      const newResponse = new Response({
-        surveyId,
-        questionId,
-        response
-      });
-  
-      // Save the new response
-      await newResponse.save();
+  try {
+    const { survey, responses } = req.body; // Talep gövdesinden kullanıcı bilgilerini ve yanıtları al
+    const newResponse = new Response({survey, responses }); // Yeni bir Response nesnesi oluştur
+    const savedResponse = await newResponse.save(); // Yeni yanıtı veritabanına kaydet
 
-        // Retrieve the Survey object
-    const survey = await Survey.findById(surveyId);
-  
-        // Push the Id of the created Response object to the responses array
-    survey.responses.push(newResponse._id);
-    
-        // Save the updated Survey object
-    await survey.save();
-  
-      return res.status(201).json({ message: 'Yanit Başarıyla oluşturuldu', response: newResponse });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Failed to create response' });
-    }
-  };
+     await Survey.findByIdAndUpdate(
+      survey,
+      { $push: { responses: savedResponse._id } }, // responses alanına yanıt ID'sini ekleyin
+      { new: true }
+    );
 
-// Get all responses for a specific survey
-exports.getResponsesBySurvey = async (req, res) => {
-    const { surveyId } = req.params;
-  
-    try {
-      // Find all responses that belong to the specified survey
-      const responses = await Response.find({ surveyId });
-  
-      return res.status(200).json({ responses });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Failed to get responses' });
-    }
-  };
-// // Get all responses for a specific question of a specific survey
-// exports.getResponsesOfQuestionOfSurvey = async (req, res) => {
-//     const { surveyId, questionId } = req.params;
-  
-//     try {
-//       // Find all responses that belong to the specified question and survey
-//       const responses = await Response.find({ surveyId, questionId }).populate('surveyId')
-  
-//       return res.status(200).json({ responses });
-//     } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({ error: 'Failed to get responses' });
-//     }
-//   };
+    res.status(201).json({ success: true, data: savedResponse });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Tüm yanıtları getirme (READ)
+exports.getAllResponses = async (req, res) => {
+  try {
+    const responses = await Response.find({survey : req.params.surveyId}).populate('responses.question','questionText options isRequired'); // Tüm yanıtları getir
+    res.status(200).json({ success: true, data: responses });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+

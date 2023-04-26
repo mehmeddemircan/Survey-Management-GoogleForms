@@ -1,11 +1,12 @@
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Question = require("../models/Question");
+const Response = require("../models/Response");
 const Survey = require("../models/Survey");
 const cloudinary = require('cloudinary')
 // Create a new survey
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
-    const { title, description, questions, responses } = req.body;
+    const { title, description,category, questions, responses } = req.body;
 
     const result = await cloudinary.uploader.upload(req.body.image);
     
@@ -19,6 +20,7 @@ exports.createSurvey = catchAsyncErrors(async (req, res) => {
     const survey = new Survey({
       title,
       description,
+      category,
       image,
       questions,
       responses,
@@ -54,7 +56,7 @@ exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
 
 exports.getSurveyDetails  = catchAsyncErrors(async(req,res) => {
     try {
-        const survey = await Survey.findById(req.params.id).populate('questions','questionType questionText options isRequired').exec()
+        const survey = await Survey.findById(req.params.id).populate('questions','questionType questionText options isRequired responses').exec()
         res.status(200).json({data : survey})
     } catch (error) {
         res.status(500).json({error : error.message})
@@ -91,13 +93,3 @@ exports.deleteSurvey = catchAsyncErrors(async(req,res) => {
     }
   })
 
-exports.getResponsesBySurveyId = catchAsyncErrors(async(req,res) => {
-    try {
-        const survey = await Survey.findById(req.params.surveyId)
-        const surveyResponses = survey.responses
-        res.status(200).json(surveyResponses)
-
-    } catch (error) {
-        res.status(500).json({error: error.message})
-    }
-})

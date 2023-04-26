@@ -1,11 +1,10 @@
 
 import './App.css';
-import { Fragment } from 'react';
-import {Button} from 'antd'
+import React , {Fragment} from 'react'
 function App() {
   return (
       <Fragment>
-        <Button>dsadsadas</Button>
+        <button className='btn btn-outline-danger'>dassdaasd</button>
       </Fragment>
   );
 }
