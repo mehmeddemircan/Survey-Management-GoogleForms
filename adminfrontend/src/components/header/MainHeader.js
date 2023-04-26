@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import LanguageModal from '../modal/language/LanguageModal'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import LoggedInSegment from './LoggedInSegment';
+import NotLoggedInSegment from './NotLoggedInSegment';
 
 const MainHeader = () => {
+  const auth = useSelector((state) => state.auth);
+
+  const [showLanguageModal, setShowLanguageModal] = useState(false)
+
+  const handleShowLanguageModal = () => {
+    setShowLanguageModal(true)
+  }
+
+  const handleCloseLanguageModal = () => {
+    setShowLanguageModal(false)
+  }
+
+  const navigate = useNavigate()
+
   return (
     <nav
         class="navbar navbar-expand-sm navbar-light"
@@ -16,14 +35,24 @@ const MainHeader = () => {
 
             {/* <HeaderMenuDropDown /> */}
          
+            
             <a
               className="text-dark mt-1 ms-2"
               style={{
                 textDecorationLine: "none",
               }}
-              href="/markalar"
+              href="/kategoriler"
             >
-              Markalar
+              Kategoriler
+            </a>
+            <a
+              className="text-dark mt-1 ms-2"
+              style={{
+                textDecorationLine: "none",
+              }}
+              href="/kullanicilar"
+            >
+              KullanicIlar
             </a>
               {/* <FormMenuDropDown /> */}
           </div>
@@ -51,25 +80,17 @@ const MainHeader = () => {
             {/* globe */}
             <button
               className="btn btn-light rounded-pill"
-            //   onClick={handleShowLanguageModal}
+              onClick={handleShowLanguageModal}
             >
               <i class="fa-solid fa-globe"></i>
             </button>
-            <button
-              className="btn btn-light rounded-pill d-inline-flex align-items-center "
-              style={{ border: "1px solid rgb(221,221,221)" }}
-            //   onClick={handleShowLoginModal}
-            >
-              <i class="fa-solid fa-bars mx-2 mt-1"></i>
-     
-              <a>Giriş Yap</a>
-            </button>
-            {/* <LanguageModal
+          
+            <LanguageModal
               showLanguageModal={showLanguageModal}
-              handleCancelLanguageModal={handleCancelLanguageModal}
-            /> */}
+              handleCloseLanguageModal={handleCloseLanguageModal}
+            />
 
-            {/* {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />} */}
+            {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
           </div>
         </div>
       </nav>
