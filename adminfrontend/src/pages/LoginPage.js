@@ -3,6 +3,7 @@ import MainLayout from "../components/layout/MainLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { Login ,register as _register} from "../redux/actions/AuthActions";
 import { Navigate, useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 
 const LoginPage = () => {
@@ -51,9 +52,18 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth.authenticate) {
+      message.success(auth.message)
       navigate('/', { replace: true });
     }
+   
   }, [auth.authenticate, navigate]);
+  useEffect(() => {
+    if (!auth.authenticating && auth.error !== null && auth.token === null ) {
+      if (auth.error) {
+        message.error(auth.error);
+      }
+    }
+  }, [auth.authenticating,auth.error,auth.token])
   return (
     <MainLayout>
       <div className="container h-100 my-4">
@@ -68,7 +78,7 @@ const LoginPage = () => {
                   >
                     {register ? "Giriş Yap" : "Kayıt Ol"}
                   </button>
-                  <h4 className="my-0">AkınSoft Anket Yönetim {auth.authenticate ? "true" : "false"}</h4>
+                  <h4 className="my-0">AkınSoft Anket Yönetim</h4>
                   <div></div>
                 </div>
                 <div className="row justify-content-center">

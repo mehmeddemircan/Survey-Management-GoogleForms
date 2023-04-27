@@ -3,10 +3,15 @@ const { isAuthenticatedUser } = require("../middleware/auth");
 const {
   getUserProfile,
   updateUserProfile,
+  getAllUser,
+  deleteUser,
 } = require("../controllers/userController");
 const upload = require("../middleware/upload");
 
 var router = express.Router();
+
+router.route('/users').get(getAllUser)
+router.route('/users/:id/delete').delete(deleteUser)
 
 router.route("/profile/me").get(isAuthenticatedUser, getUserProfile);
 router

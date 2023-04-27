@@ -2,6 +2,44 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/User");
 const sendToken = require("../utils/sendToken");
 const cloudinary = require("cloudinary");
+
+
+
+exports.getAllUser = catchAsyncErrors(async(req,res) => {
+ 
+    try {
+        // Get page and limit from query parameters
+        const { page = 1, limit = 10 } = req.query;
+    
+        // Calculate skip value based on page and limit
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+    
+        // Get total count of surveys
+        const totalUsers = await User.countDocuments();
+    
+        // Get surveys with pagination using skip and limit
+        const users = await User.find().skip(skip).limit(parseInt(limit))
+    
+        res.status(200).json({ data: users, totalUsers });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+
+})
+
+exports.deleteUser = catchAsyncErrors(async(req,res) => {
+  try {
+
+    await User.findByIdAndDelete(req.params.id) 
+
+    res.status(200).json({message : 'Kullanici Basariyla silindi'})
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
+
+
+
 // Get currently logged in user details   =>   /api/profile/me
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);

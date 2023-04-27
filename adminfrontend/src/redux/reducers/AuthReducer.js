@@ -44,6 +44,7 @@ export const authReducer = (state = initialState, action) => {
     case LOGIN_FAIL:
       return {
         ...state,
+        authenticate: false ,
         authenticating: false,
         error: action.payload.error,
       };
@@ -75,6 +76,7 @@ export const authReducer = (state = initialState, action) => {
     case REGISTER_FAIL:
       return {
         ...state,
+        authenticate : false ,
         authenticating : false , 
         error: action.payload.error,
       };

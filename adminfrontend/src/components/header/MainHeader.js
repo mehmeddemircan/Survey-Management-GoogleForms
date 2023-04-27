@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import LoggedInSegment from './LoggedInSegment';
 import NotLoggedInSegment from './NotLoggedInSegment';
+import InfoBadge from '../badge/InfoBadge';
 
 const MainHeader = () => {
   const auth = useSelector((state) => state.auth);
@@ -78,12 +79,22 @@ const MainHeader = () => {
           </div>
           <div>
             {/* globe */}
+            <InfoBadge count={2} >
+            <button
+              className="btn btn-light rounded-pill"
+             
+            >
+             <i class="fa-solid fa-heart me-2"></i><a>Favoriler</a>
+            </button>
+            </InfoBadge>
+           
             <button
               className="btn btn-light rounded-pill"
               onClick={handleShowLanguageModal}
             >
               <i class="fa-solid fa-globe"></i>
             </button>
+      
           
             <LanguageModal
               showLanguageModal={showLanguageModal}
