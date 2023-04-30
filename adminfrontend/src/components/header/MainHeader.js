@@ -1,111 +1,96 @@
-import React, { useState } from 'react'
-import LanguageModal from '../modal/language/LanguageModal'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import LoggedInSegment from './LoggedInSegment';
-import NotLoggedInSegment from './NotLoggedInSegment';
-import InfoBadge from '../badge/InfoBadge';
+import React, { useEffect, useState } from "react";
+import LanguageModal from "../modal/language/LanguageModal";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import LoggedInSegment from "./LoggedInSegment";
+import NotLoggedInSegment from "./NotLoggedInSegment";
+import InfoBadge from "../badge/InfoBadge";
 
 const MainHeader = () => {
   const auth = useSelector((state) => state.auth);
 
-  const [showLanguageModal, setShowLanguageModal] = useState(false)
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   const handleShowLanguageModal = () => {
-    setShowLanguageModal(true)
-  }
+    setShowLanguageModal(true);
+  };
 
   const handleCloseLanguageModal = () => {
-    setShowLanguageModal(false)
-  }
+    setShowLanguageModal(false);
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleToggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+
+
 
   return (
     <nav
-        class="navbar navbar-expand-sm navbar-light"
-        style={{
-          border: "1px solid rgb(221,221,221)",
-        }}
-      >
-        <div class="container  d-flex  justify-content-between py-2">
-          <div className="d-inline-flex align-items-center">
-            <a class="navbar-brand" href="/">
-              AkınSoft
-            </a>
+      className={`navbar navbar-expand-lg navbar-light`}
+      style={{
+        border: "1px solid rgb(221,221,221)",
+      }}
+    >
+      <div class="container py-3">
+        <a class="navbar-brand" href="/">
+          AkınSoft
+        </a>
 
-            {/* <HeaderMenuDropDown /> */}
-         
-            
-            <a
-              className="text-dark mt-1 ms-2"
-              style={{
-                textDecorationLine: "none",
-              }}
-              href="/kategoriler"
-            >
-              Kategoriler
-            </a>
-            <a
-              className="text-dark mt-1 ms-2"
-              style={{
-                textDecorationLine: "none",
-              }}
-              href="/kullanicilar"
-            >
-              KullanicIlar
-            </a>
-              {/* <FormMenuDropDown /> */}
-          </div>
-          <div>
-            <button
-              className="btn btn-light rounded-pill d-inline-flex align-items-center"
-              style={{ border: "1px solid rgb(221,221,221)" }}
-            >
-              <div className="mx-2 my-2">
-                Herhangi bir yer{" "}
-                <a className="ms-2" href="#">
-                  {" "}
-                  |
-                </a>
-              </div>
-              <div className="mx-2 my-2">
-                Herhangi bir yer{" "}
-                <a className="ms-2" href="#">
-                  {" "}
-                </a>
-              </div>
-            </button>
-          </div>
+        {/* <HeaderMenuDropDown /> */}
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={handleToggleMenu}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div
+          className={`collapse navbar-collapse ${showMenu ? "show" : ""}`}
+          id="navbarNav"
+        >
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <a className="nav-link" href="/kategoriler">
+                Kategoriler
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/kullanicilar">
+                Kullanicilar
+              </a>
+            </li>
+          </ul>
+
           <div>
             {/* globe */}
-            <InfoBadge count={2} >
-            <button
-              className="btn btn-light rounded-pill"
-             
-            >
-             <i class="fa-solid fa-heart me-2"></i><a>Favoriler</a>
-            </button>
-            </InfoBadge>
+            
+
            
+
+            {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
             <button
               className="btn btn-light rounded-pill"
               onClick={handleShowLanguageModal}
             >
               <i class="fa-solid fa-globe"></i>
             </button>
-      
-          
+
             <LanguageModal
               showLanguageModal={showLanguageModal}
               handleCloseLanguageModal={handleCloseLanguageModal}
             />
-
-            {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
           </div>
         </div>
-      </nav>
-  )
-}
+      </div>
+    </nav>
+  );
+};
 
-export default MainHeader
+export default MainHeader;
