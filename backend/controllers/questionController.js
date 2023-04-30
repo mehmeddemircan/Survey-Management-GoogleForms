@@ -136,3 +136,17 @@ exports.updateQuestion = catchAsyncErrors(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+exports.getSingleQuestion = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const question = await Question.findById(req.params.questionId)
+
+    return res.status(200).json({
+      question : question
+    })
+
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})

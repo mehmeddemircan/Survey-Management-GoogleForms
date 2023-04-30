@@ -10,10 +10,6 @@ const surveySchema = new mongoose.Schema(
     description: { 
         type: String 
     },
-    category : {
-      type : ObjectId,
-      ref : 'Category'
-    },
     image : {
       type : String
     },

@@ -1,5 +1,5 @@
 var express = require('express');
-const { createQuestion, toggleQuestionIsRequired, deleteQuestion, getSurveyQuestions, updateQuestion } = require('../controllers/questionController');
+const { createQuestion, toggleQuestionIsRequired, deleteQuestion, getSurveyQuestions, updateQuestion, getSingleQuestion } = require('../controllers/questionController');
 
 
 
@@ -15,5 +15,6 @@ router
 router.route('/surveys/:surveyId/questions/:questionId/delete').delete(deleteQuestion)
 router.route('/questions/:questionId/update').put(updateQuestion)
 router.route('/surveys/:surveyId/questions').get(getSurveyQuestions)
+router.route('/questions/:questionId/details').get(getSingleQuestion)
 
 module.exports = router;
