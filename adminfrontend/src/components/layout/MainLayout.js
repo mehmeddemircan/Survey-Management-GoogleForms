@@ -1,6 +1,7 @@
 import React , {Fragment} from 'react'
 import MainHeader from '../header/MainHeader'
 import MainFooter from '../footer/MainFooter'
+import BackTopButton from '../backtop/BackTopButton'
 
 const MainLayout = ({children}) => {
   return (
@@ -9,6 +10,7 @@ const MainLayout = ({children}) => {
         <div className='container'>
         {children}
         </div>
+        <BackTopButton />
         <MainFooter />
     </Fragment>
   )
