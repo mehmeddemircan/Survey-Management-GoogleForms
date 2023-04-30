@@ -3,10 +3,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { authReducer } from "./reducers/AuthReducer";
 import userReducer from "./reducers/UserReducer";
+import surveyReducer from "./reducers/SurveyReducer";
+import questionReducer from "./reducers/QuestionReducer";
 
 const rootReducer = combineReducers({
     auth : authReducer,
-    user : userReducer
+    user : userReducer,
+    survey : surveyReducer,
+    question : questionReducer
 })
 
 const initialState = {}
