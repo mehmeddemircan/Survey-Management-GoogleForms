@@ -12,10 +12,6 @@ exports.createSurvey = catchAsyncErrors(async (req, res) => {
     
     const image = result.secure_url;
     
-  
-    res.status(200).json({
-      message: "Successfully added brand",
-    });
 
     const survey = new Survey({
       title,
@@ -93,3 +89,47 @@ exports.deleteSurvey = catchAsyncErrors(async(req,res) => {
     }
   })
 
+
+  exports.surveySearchQuery = async (req, res) => {
+    try {
+      const searchQuery = req.query.title;
+      const surveys = await Survey.find({
+        title: { $regex: searchQuery, $options: "i" },
+      });
+      res.json({
+        surveys,
+        message: "Successfully searched",
+      });
+    } catch (error) {
+      res.status(500).send({ message: "Error searching users" });
+    }
+  };
+
+
+  exports.addQuestionsToSurvey =  catchAsyncErrors(async (req, res) => {
+    const { surveyId, questions } = req.body;
+  
+    try {
+      const survey = await Survey.findById(surveyId);
+  
+      if (!survey) {
+        return res.status(404).json({ error: 'Survey not found' });
+      }
+  
+      const createdQuestions = [];
+  
+      for (const question of questions) {
+        const newQuestion = new Question(question);
+        await newQuestion.save();
+        createdQuestions.push(newQuestion._id);
+      }
+  
+      survey.questions.push(...createdQuestions);
+      await survey.save();
+  
+      res.status(200).json({ message: 'Questions added successfully', survey });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });

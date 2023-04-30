@@ -3,7 +3,7 @@ const Question = require("../models/Question");
 const Survey = require("../models/Survey");
 
 exports.createQuestion = catchAsyncErrors(async (req, res) => {
-  const { surveyId, questionType, questionText, choices, isRequired } =
+  const { surveyId, questionType, questionText, options, isRequired } =
     req.body;
 
   try {
@@ -11,7 +11,7 @@ exports.createQuestion = catchAsyncErrors(async (req, res) => {
       surveyId,
       questionType,
       questionText,
-      choices,
+      options,
       isRequired,
     });
 
@@ -109,17 +109,30 @@ exports.deleteQuestion = catchAsyncErrors(async (req, res) => {
 });
 exports.getSurveyQuestions = catchAsyncErrors(async (req, res) => {
   try {
-    const survey = await Survey.findById(req.params.surveyId).populate('questions','questionType questionText options isRequired '); // Use Mongoose's findById method to find the survey by its ID, and populate the 'questions' field with the associated questions
+    const survey = await Survey.findById(req.params.surveyId).populate(
+      "questions",
+      "questionType questionText options isRequired "
+    ); // Use Mongoose's findById method to find the survey by its ID, and populate the 'questions' field with the associated questions
     if (!survey) {
-      return res.status(404).json({ message: 'Survey not found' });
+      return res.status(404).json({ message: "Survey not found" });
     }
     const questions = survey.questions; // Access the questions array from the retrieved survey object
     return res.status(200).json({ questions });
-  
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+exports.updateQuestion = catchAsyncErrors(async (req, res) => {
+  try {
+    await Question.findByIdAndUpdate(
+      req.params.questionId,
+      { $set: req.body },
+      { new: true }
+    );
 
-
+    return res.status(200).json({ message: "Soru başariyla güncellendi" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});

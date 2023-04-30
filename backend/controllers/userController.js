@@ -80,3 +80,56 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     });
   }
 });
+
+
+
+exports.addSurveyToFavorites = catchAsyncErrors( async (req, res) => {
+  const { userId, surveyId } = req.params;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { $addToSet: { favorites: surveyId } }, { new: true }).populate('favorites');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'Survey added to favorites', favorites: user.favorites });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
+
+exports.removeFromFavorites = async (req, res) => {
+  const { userId, surveyId } = req.params;
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { $pull: { favorites: surveyId } }, { new: true }).populate('favorites');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'Survey removed from favorites', favorites: user.favorites });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.getFavoriteSurveys = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).populate('favorites');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ favorites: user.favorites });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};

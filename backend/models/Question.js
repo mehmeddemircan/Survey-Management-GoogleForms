@@ -12,7 +12,6 @@ const questionSchema = new mongoose.Schema(
      // Soru tipi (kısa yanıt, paragraf, çoktan seçmeli, vb.)
     questionType: { 
         type: String,
-        enum: ['coktanSecmeli', 'kisaYanit', 'uzunYanit'],
         required: true 
     },
     // Soru metni

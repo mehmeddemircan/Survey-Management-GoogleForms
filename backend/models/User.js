@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const {ObjectId} = mongoose.Schema
 var userSchema = new mongoose.Schema({
     firstname: {
         type: String,
@@ -24,6 +25,10 @@ var userSchema = new mongoose.Schema({
           type: String,
         },
     },
+    favorites: [{
+      type: ObjectId,
+      ref: 'Survey'
+    }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 },{timestamps : true });

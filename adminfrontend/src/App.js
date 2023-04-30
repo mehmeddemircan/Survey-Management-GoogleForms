@@ -10,14 +10,21 @@ import PrivateRoute from "./routes/PrivateRoute";
 import { isUserLoggedIn } from "./redux/actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import UsersPage from "./pages/UsersPage";
+import SurveyDetailsPage from "./pages/SurveyDetailsPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import { ADD_SURVEY_TO_FAVORITE_RESET, REMOVE_SURVEY_FROM_FAVORITE_RESET } from "./redux/constants/UserConstants";
+import { message } from "antd";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   // When we fresh the page if you are in logged in  stay logged in
+
+
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
+   
   }, [auth.authenticate]);
 
   return (
@@ -44,6 +51,8 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/anketler/:id" element={<SurveyDetailsPage />} />
+        <Route path="/favorilerim" element={<FavoritesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

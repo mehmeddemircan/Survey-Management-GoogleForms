@@ -8,6 +8,8 @@ const {
   updateSurvey,
   getResponsesBySurveyId,
   saveResponses,
+  surveySearchQuery,
+  addQuestionsToSurvey,
 } = require("../controllers/surveyController");
 const {
   isRequestValidated,
@@ -25,8 +27,8 @@ router.route("/get-surveys").get(getAllSurvey);
 router.route("/surveys/:id/details").get(getSurveyDetails);
 router.route("/surveys/:id/delete").delete(deleteSurvey);
 router.route("/surveys/:id/update").put(updateSurvey);
+router.route('/surveys/:surveyId/addQuestions').post(addQuestionsToSurvey)
 
-
-
+router.route("/surveys/search").get(surveySearchQuery);
 
 module.exports = router;

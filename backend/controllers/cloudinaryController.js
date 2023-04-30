@@ -34,7 +34,7 @@ exports.remove = (req, res, next) => {
         err,
       });
     }
-    res.send("ok");
+    res.status(200).json({mesage : "Başarıyla silindi"});
   });
 };
 
