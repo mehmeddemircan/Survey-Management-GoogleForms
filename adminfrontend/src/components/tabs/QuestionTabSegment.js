@@ -15,6 +15,8 @@ import {
   UPDATE_QUESTION_RESET,
 } from "../../redux/constants/QuestionConstants";
 import AddQuestionForm from "../form/AddQuestionForm";
+import LoadingSpinner from "../spinner/LoadingSpinner";
+import EmptyComponent from "../empty/EmptyComponent";
 
 const QuestionTabSegment = () => {
   const getSingleSurvey = useSelector((state) => state.survey.getSingleSurvey);
@@ -58,7 +60,6 @@ const QuestionTabSegment = () => {
   ]);
   const getAllQuestion = useSelector((state) => state.question.getAllQuestion);
 
- 
   return (
     <div className="container">
       <div className="d-flex justify-content-end">
@@ -77,9 +78,15 @@ const QuestionTabSegment = () => {
 
       <h6>Sorular</h6>
       <hr />
-      {getAllQuestion.data.questions.map((question) => (
-        <QuestionCard key={question._id} question={question} />
-      ))}
+      {getAllQuestion.loading ? (
+        <LoadingSpinner />
+      ) : getAllQuestion.data.questions.length === 0 ? (
+        <EmptyComponent />
+      ) : (
+        getAllQuestion.data.questions.map((question) => (
+          <QuestionCard key={question._id} question={question} />
+        ))
+      )}
     </div>
   );
 };

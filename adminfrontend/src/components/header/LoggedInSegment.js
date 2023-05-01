@@ -33,7 +33,7 @@ const LoggedInSegment = () => {
             <li class="list-group-item  border-0">
               <div className="d-inline-flex align-items-center">
                 <i class="fa-solid fa-user me-2"></i>
-                <a>Profil</a>{" "}
+                <a style={{textDecorationLine:'none',color:'#222'}} href="/profilim">Profil</a>{" "}
               </div>
             </li>
             <li

@@ -14,6 +14,7 @@ import SurveyDetailsPage from "./pages/SurveyDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import { ADD_SURVEY_TO_FAVORITE_RESET, REMOVE_SURVEY_FROM_FAVORITE_RESET } from "./redux/constants/UserConstants";
 import { message } from "antd";
+import ProfilePage from "./pages/ProfilePage";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -53,6 +54,7 @@ function App() {
         />
         <Route path="/anketler/:id" element={<SurveyDetailsPage />} />
         <Route path="/favorilerim" element={<FavoritesPage />} />
+        <Route path="/profilim" element={<ProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
