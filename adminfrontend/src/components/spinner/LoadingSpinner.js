@@ -1,7 +1,9 @@
-import { Spin } from 'antd';
+import { Space, Spin } from 'antd';
 const LoadingSpinner = () => {
     return (
-        <Spin size='large' />
+        <Space className='d-flex justify-content-center align-items-center'>
+            <Spin size='large' />
+        </Space>
     )
 };
 export default LoadingSpinner;
