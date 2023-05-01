@@ -7,7 +7,7 @@ import { DeleteQuestion } from "../../redux/actions/QuestionActions";
 import { useParams } from "react-router-dom";
 import EditQuestionModal from "../modal/question/EditQuestionModal";
 
-const QuestionCard = ({ question }) => {
+const QuestionCard = ({ isDrawerCard,question }) => {
 
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -34,7 +34,8 @@ const QuestionCard = ({ question }) => {
         title={<><h6 className="d-inline-block">{question.questionText}</h6>{question.isRequired ? <i class="fa-sharp fa-solid fa-star-of-life mx-2 "style={{fontSize:'10px',color : 'red'}}></i> : null}</>}
         bordered={true}
         extra={
-          <>
+          isDrawerCard ? null : (
+            <>
             <button className="btn btn-light mx-2" onClick={handleShowEditQuestionModal}>Düzenle</button>
 
             <EditQuestionModal 
@@ -49,6 +50,7 @@ const QuestionCard = ({ question }) => {
               </button>
             </InfoTooltip>
           </>
+          )
         }
       >
         {question.questionType === "Kısa Yanıt" && (
