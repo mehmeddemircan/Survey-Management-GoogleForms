@@ -5,6 +5,8 @@ import { GetSurveyFavorites } from '../redux/actions/UserActions'
 import SurveyCard from '../components/card/SurveyCard'
 import { message } from 'antd'
 import { ADD_SURVEY_TO_FAVORITE_RESET, REMOVE_SURVEY_FROM_FAVORITE_RESET } from '../redux/constants/UserConstants'
+import LoadingSpinner from '../components/spinner/LoadingSpinner'
+import EmptyComponent from '../components/empty/EmptyComponent'
 
 const FavoritesPage = () => {
 
@@ -26,9 +28,9 @@ const FavoritesPage = () => {
   return (
     <MainLayout>
         <h2>hello favorite page</h2>
-        {getUserFavorites.data.favorites.map((survey) => (
+        {getUserFavorites.loading ? <LoadingSpinner /> : getUserFavorites.data.favorites.length === 0 ? <EmptyComponent /> : getUserFavorites.data.favorites.map((survey) => (
             <SurveyCard key={survey._id} survey={survey}  />
-        ))}
+        ))} 
     </MainLayout>
   )
 }
