@@ -11,6 +11,7 @@ import {
 import { useParams } from "react-router-dom";
 import AddQuestionForm from "../../form/AddEditQuestionForm";
 import AddEditQuestionForm from "../../form/AddEditQuestionForm";
+import ShowQuestionDrawer from "../../drawer/ShowQuestionDrawer";
 const { Option } = Select;
 const AddQuestionModal = ({
   showAddQuestionModal,
@@ -75,6 +76,34 @@ const AddQuestionModal = ({
     setOptions(filteredOptionStrings);
   }, [optionsObjects.length]);
 
+
+  const [showQuestionDrawer, setShowQuestionDrawer] = useState(false)
+
+  const handleShowQuestionDrawer = () => {
+    setShowQuestionDrawer(true)
+  }
+
+  const handleCloseShowQuestionDrawer = () => {
+    setShowQuestionDrawer(false)
+  }
+
+  const [question, setQuestion] = useState({
+    questionText : "",
+    questionType : "",
+    options : [],
+    isRequired : false 
+   
+
+  })
+
+  useEffect(() => {
+    setQuestion({
+      questionText : questionText,
+      questionType : questionType,
+      options : options,
+      isRequired : isRequired
+    })
+  }, [questionText,questionType,options,isRequired])
   return (
     <Modal
       centered={true}
@@ -82,7 +111,26 @@ const AddQuestionModal = ({
       open={showAddQuestionModal}
       onOk={handleAddQuestion}
       onCancel={handleCloseAddQuestionModal}
-    >
+      footer={[
+        <Button key="questionShow" onClick={handleShowQuestionDrawer}>
+        Ön İzleme Yap
+      </Button>,
+     
+
+      <Button key="submit" type="primary"  onClick={handleAddQuestion}>
+        Onayla
+      </Button>,
+     
+    ]}
+    
+    > 
+
+       <ShowQuestionDrawer 
+        question={question}
+       
+      showQuestionDrawer={showQuestionDrawer}
+      handleCloseShowQuestionDrawer={handleCloseShowQuestionDrawer}
+      />
       {options.map((option) => (
         <div>{option}</div>
       ))}
