@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CREATE_SURVEY_FAIL, CREATE_SURVEY_REQUEST, CREATE_SURVEY_SUCCESS, DELETE_SURVEY_FAIL, DELETE_SURVEY_REQUEST, DELETE_SURVEY_SUCCESS, GET_ALL_SURVEY_FAIL, GET_ALL_SURVEY_REQUEST, GET_ALL_SURVEY_SUCCESS, GET_SINGLE_SURVEY_FAIL, GET_SINGLE_SURVEY_REQUEST, GET_SINGLE_SURVEY_SUCCESS, SEARCH_SURVEYS_FAIL, SEARCH_SURVEYS_REQUEST, SEARCH_SURVEYS_SUCCESS } from "../constants/SurveyConstants";
+import { CREATE_SURVEY_FAIL, CREATE_SURVEY_REQUEST, CREATE_SURVEY_SUCCESS, DELETE_SURVEY_FAIL, DELETE_SURVEY_REQUEST, DELETE_SURVEY_SUCCESS, GET_ALL_SURVEY_FAIL, GET_ALL_SURVEY_REQUEST, GET_ALL_SURVEY_SUCCESS, GET_SINGLE_SURVEY_FAIL, GET_SINGLE_SURVEY_REQUEST, GET_SINGLE_SURVEY_SUCCESS, SEARCH_SURVEYS_FAIL, SEARCH_SURVEYS_REQUEST, SEARCH_SURVEYS_SUCCESS, UPDATE_SURVEY_FAIL, UPDATE_SURVEY_REQUEST, UPDATE_SURVEY_SUCCESS } from "../constants/SurveyConstants";
 
 
 export const AllSurvey = (limit,page) => async (dispatch) => {
@@ -58,6 +58,26 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
     } catch (error) {
       dispatch({
         type: DELETE_SURVEY_FAIL,
+        error: error.response,
+      });
+    }
+  };
+
+  export const UpdateSurvey = (surveyId,survey) => async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_SURVEY_REQUEST,
+      });
+  
+      const { data } = await axios.put(`http://localhost:5000/api/surveys/${surveyId}/update`,survey);
+  
+      dispatch({
+        type: UPDATE_SURVEY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_SURVEY_FAIL,
         error: error.response,
       });
     }
