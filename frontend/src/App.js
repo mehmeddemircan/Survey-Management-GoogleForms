@@ -1,12 +1,17 @@
 
 import './App.css';
 import { Fragment } from 'react';
-import {Button} from 'antd'
+import { BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
+import SurveyDetailsPage from './pages/SurveyDetailsPage';
+import NotFoundPage from './pages/NotFoundPage';
 function App() {
   return (
-      <Fragment>
-        <Button>dsadsadas</Button>
-      </Fragment>
+        <Router>
+          <Routes>
+            <Route index path='/anketler/:id' element={<SurveyDetailsPage />} />
+            <Route  path='/*' element={<NotFoundPage />} />
+          </Routes>
+        </Router>
   );
 }
 
