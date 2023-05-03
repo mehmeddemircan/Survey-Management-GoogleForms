@@ -2,7 +2,7 @@ import { Modal, message } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from "react-redux";
-import AddSurveyForm from "../../form/AddSurveyForm";
+import AddEditSurveyForm from "../../form/AddEditSurveyForm";
 import axios from "axios";
 import { CreateSurvey } from "../../../redux/actions/SurveyActions";
 import { useNavigate } from "react-router-dom";
@@ -95,7 +95,7 @@ const AddSurveyModal = ({ showAddSurveyModal, handleCloseAddSurveyModal }) => {
         onOk={handleCreateSurvey}
         onCancel={handleCloseAddSurveyModal}
       >
-        <AddSurveyForm
+        <AddEditSurveyForm
           title={title}
           setTitle={setTitle}
           description={description}
