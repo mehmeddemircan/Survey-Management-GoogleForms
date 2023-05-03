@@ -13,6 +13,7 @@ import { message } from "antd";
 import {
   CREATE_SURVEY_RESET,
   DELETE_SURVEY_RESET,
+  UPDATE_SURVEY_RESET,
 } from "../redux/constants/SurveyConstants";
 import { useNavigate } from "react-router-dom";
 import SurveySearchBox from "../components/searchbox/SurveySearchBox";
@@ -40,13 +41,15 @@ const HomePage = () => {
     dispatch(AllSurvey(limit, currentPage));
     if (createSurvey.success) {
       message.success(createSurvey.message);
-
       dispatch({ type: CREATE_SURVEY_RESET });
     }
     if (deleteUpdateSurvey.isDeleted) {
       message.success(deleteUpdateSurvey.message);
-
       dispatch({ type: DELETE_SURVEY_RESET });
+    }
+    if (deleteUpdateSurvey.isUpdated) {
+      message.success(deleteUpdateSurvey.message);
+      dispatch({ type: UPDATE_SURVEY_RESET });
     }
   }, [
     dispatch,
@@ -54,6 +57,7 @@ const HomePage = () => {
     currentPage,
     createSurvey.success,
     deleteUpdateSurvey.isDeleted,
+    deleteUpdateSurvey.isUpdated
   ]);
 
   // search survey
