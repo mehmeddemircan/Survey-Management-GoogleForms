@@ -29,7 +29,11 @@ const questionSchema = new mongoose.Schema(
         type: Boolean,
         default : false 
     },
-    
+    responses : [
+      {
+        type : String
+      }
+    ]
   },
   { timestamps: true }
 );
