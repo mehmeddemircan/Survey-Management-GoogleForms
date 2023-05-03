@@ -3,6 +3,7 @@ import SurveyCard from "../card/SurveyCard";
 import { useSelector } from "react-redux";
 import QuestionTabSegment from "./QuestionTabSegment";
 import InfoBadge from "../badge/InfoBadge";
+import ResponseTabSegment from "./ResponseTabSegment";
 const { TabPane } = Tabs;
 const SurveyHeaderTabs = () => {
   const getAllQuestion = useSelector((state) => state.question.getAllQuestion);
@@ -24,7 +25,7 @@ const SurveyHeaderTabs = () => {
         <QuestionTabSegment />
       </TabPane>
       <TabPane key="2" tab="Yanıtlar">
-        <h2>hello</h2>
+            <ResponseTabSegment />
       </TabPane>
       <TabPane key="3" tab="Ayarlar">
         <h2>Ayarlar</h2>
