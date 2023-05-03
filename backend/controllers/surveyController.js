@@ -6,18 +6,21 @@ const cloudinary = require("cloudinary");
 // Create a new survey
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
-    const { title, description, category, questions, responses } = req.body;
+    const { title, description, questions } = req.body;
+    let image;
 
-    const result = await cloudinary.uploader.upload(req.body.image);
+    if (req.body.image) {
+      const result = await cloudinary.uploader.upload(req.body.image);
+      image = result.secure_url;
+    }
 
-    const image = result.secure_url;
 
     const survey = new Survey({
       title,
       description,
       image,
       questions,
-      responses,
+  
     });
     await survey.save();
     res
@@ -135,5 +138,50 @@ exports.addQuestionsToSurvey = catchAsyncErrors(async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+
+exports.submitSurveyAnswers = catchAsyncErrors(async (req, res) => {
+  try {
+    const surveyId = req.body.surveyId;
+    const surveyResponses = req.body;
+  
+    // SurveyId'ye ait soruların listesini alın
+    const surveyQuestions = await Question.find({ surveyId });
+  
+    // Tüm sorular için cevapları kaydedin
+    for (let i = 0; i < surveyQuestions.length; i++) {
+      const questionId = surveyQuestions[i]._id;
+      const response = surveyResponses[questionId];
+  
+      if (!response) {
+        return res.status(400).send(`Soru cevapları eksik. Lütfen tüm soruları cevaplayın.`);
+      }
+  
+      // Cevabı güncelle
+      await Question.findByIdAndUpdate(questionId, { $push: { responses: response } });
+    }
+  
+    // Başarılı bir şekilde yanıt verin
+    return res.status(200).json({message : 'Cevaplar başarıyla kaydedildi.'});
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+});
+
+
+exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
+  try {
+    const survey = await Survey.findById(req.params.id)
+      .populate(
+        "questions",
+        "questionType questionText options isRequired"
+      )
+      .exec();
+    res.status(200).json({ data: survey });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
