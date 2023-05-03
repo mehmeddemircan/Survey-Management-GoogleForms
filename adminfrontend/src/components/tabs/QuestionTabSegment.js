@@ -74,7 +74,7 @@ const QuestionTabSegment = () => {
           handleCloseAddQuestionModal={handleCloseAddQuestionModal}
         />
       </div>
-      <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} />
+        {getSingleSurvey.loading ? <LoadingSpinner />  : <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} />}
 
       <h6>Sorular</h6>
       <hr />
