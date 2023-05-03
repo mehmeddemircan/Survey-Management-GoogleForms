@@ -22,13 +22,7 @@ const surveySchema = new mongoose.Schema(
 
        }
     ],
-    // Yanıt referansları (Response modeline referans) 
-    responses: [
-        { 
-        type: ObjectId,
-        ref: "Response" 
-        }
-   ], 
+
   },
   { timestamps: true }
 );
