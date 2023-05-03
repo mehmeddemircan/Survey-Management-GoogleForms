@@ -1,5 +1,5 @@
 import { Card, Image } from "antd";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import InfoTooltip from "../tooltip/InfoTooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteSurvey } from "../../redux/actions/SurveyActions";
@@ -7,14 +7,23 @@ import {
   AddSurveyToFavorite,
   RemoveSurveyFromFavorite,
 } from "../../redux/actions/UserActions";
+import EditSurveyModal from "../modal/survey/EditSurveyModal";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SurveyCard = ({ survey, isDetailsCard }) => {
+
+  const {id} = useParams()
+  const navigate = useNavigate()
+
   const dispatch = useDispatch();
   const handleDeleteSurvey = (surveyId) => {
     if (
       window.confirm(`${survey.title} silmek istedğinizden emin misiniz ? `)
     ) {
       dispatch(DeleteSurvey(surveyId));
+      if (survey._id === id) {
+        navigate('/',{replace: true})
+      }
     }
   };
   const auth = useSelector((state) => state.auth);
@@ -35,6 +44,17 @@ const SurveyCard = ({ survey, isDetailsCard }) => {
   const isSurveyInFavorites = getUserFavorites.data.favorites.some(
     (favorite) => favorite._id === survey._id
   );
+
+  const [showEditSurveyModal, setShowEditSurveyModal] = useState(false)
+
+  const handleShowEditSurveyModal = () => {
+    setShowEditSurveyModal(true)
+  }
+
+  const handleCloseEditSurveyModal = () => {
+    setShowEditSurveyModal(false)
+  }
+
   return (
     <Fragment>
       <Card
@@ -59,6 +79,22 @@ const SurveyCard = ({ survey, isDetailsCard }) => {
                 )}
               </button>
             </InfoTooltip>
+            <InfoTooltip text="Anketi Düzenle">
+              <button
+                className="btn btn-light btn-sm ms-2"
+                href="#"
+                onClick={handleShowEditSurveyModal}
+              >
+              <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </InfoTooltip>
+
+                  <EditSurveyModal 
+                    survey={survey}
+                    showEditSurveyModal={showEditSurveyModal}
+                    handleCloseEditSurveyModal={handleCloseEditSurveyModal}
+                  />
+
             <InfoTooltip text="Anketi Sil">
               <button
                 className="btn btn-light btn-sm ms-2"
@@ -74,14 +110,14 @@ const SurveyCard = ({ survey, isDetailsCard }) => {
         <div className="d-flex justify-content-between">
           <div>{survey.description}</div>
           <div>
-            <Image
+            {survey.image  ?  <Image
               className="img-fluid"
               width={300}
               height={200}
               src={
-                "https://images.pexels.com/photos/10180801/pexels-photo-10180801.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                survey.image
               }
-            />
+            /> : null}
           </div>
         </div>
       </Card>
