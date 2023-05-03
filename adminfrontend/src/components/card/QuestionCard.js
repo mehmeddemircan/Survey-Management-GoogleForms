@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import { DeleteQuestion } from "../../redux/actions/QuestionActions";
 import { useParams } from "react-router-dom";
 import EditQuestionModal from "../modal/question/EditQuestionModal";
+import CircularProgress from "../circularProgress/CircularProgress";
 
-const QuestionCard = ({ isDrawerCard,question }) => {
+const QuestionCard = ({isResponseCard,responses, isDrawerCard,question }) => {
 
     const dispatch = useDispatch()
     const {id} = useParams()
@@ -28,13 +29,15 @@ const QuestionCard = ({ isDrawerCard,question }) => {
 
   return (
     <Fragment>
+
       <Card
         className="my-2"
         hoverable
         title={<><h6 className="d-inline-block">{question.questionText}</h6>{question.isRequired ? <i class="fa-sharp fa-solid fa-star-of-life mx-2 "style={{fontSize:'10px',color : 'red'}}></i> : null}</>}
         bordered={true}
         extra={
-          isDrawerCard ? null : (
+          
+          isDrawerCard || isResponseCard ? null : (
             <>
             <button className="btn btn-light mx-2" onClick={handleShowEditQuestionModal}>Düzenle</button>
 
@@ -53,7 +56,19 @@ const QuestionCard = ({ isDrawerCard,question }) => {
           )
         }
       >
-        {question.questionType === "Kısa Yanıt" && (
+        {isResponseCard ? (
+          <div className="d-flex justify-content-between">
+              <div className="d-inline-flex flex-column">
+              {responses.map((response) => (
+              <div>{response}</div>
+            ))}
+              </div>
+              
+            {question.questionType === "Çoktan Seçmeli" &&   <CircularProgress question={question} options={question.options} responses={responses} />}
+          </div>
+        ) : (
+          <>
+            {question.questionType === "Kısa Yanıt" && (
           <Input
             disabled={true}
             className="w-25"
@@ -76,6 +91,7 @@ const QuestionCard = ({ isDrawerCard,question }) => {
         )}
 
         {question.questionType === "Çoktan Seçmeli" && (
+         <>
           <div className="d-flex flex-column">
             {question.options.map((option) => (
               <div className="d-inline-flex">
@@ -89,7 +105,13 @@ const QuestionCard = ({ isDrawerCard,question }) => {
               </div>
             ))}
           </div>
+        
+         </>
         )}
+          </>
+        )}
+
+
       </Card>
     </Fragment>
   );
