@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { CREATE_SURVEY_FAIL, CREATE_SURVEY_REQUEST, CREATE_SURVEY_RESET, CREATE_SURVEY_SUCCESS, DELETE_SURVEY_FAIL, DELETE_SURVEY_REQUEST, DELETE_SURVEY_RESET, DELETE_SURVEY_SUCCESS, GET_ALL_SURVEY_FAIL, GET_ALL_SURVEY_REQUEST, GET_ALL_SURVEY_SUCCESS, GET_SINGLE_SURVEY_FAIL, GET_SINGLE_SURVEY_REQUEST, GET_SINGLE_SURVEY_SUCCESS, SEARCH_SURVEYS_FAIL, SEARCH_SURVEYS_REQUEST, SEARCH_SURVEYS_RESET, SEARCH_SURVEYS_SUCCESS } from "../constants/SurveyConstants";
+import { CREATE_SURVEY_FAIL, CREATE_SURVEY_REQUEST, CREATE_SURVEY_RESET, CREATE_SURVEY_SUCCESS, DELETE_SURVEY_FAIL, DELETE_SURVEY_REQUEST, DELETE_SURVEY_RESET, DELETE_SURVEY_SUCCESS, GET_ALL_SURVEY_FAIL, GET_ALL_SURVEY_REQUEST, GET_ALL_SURVEY_SUCCESS, GET_SINGLE_SURVEY_FAIL, GET_SINGLE_SURVEY_REQUEST, GET_SINGLE_SURVEY_SUCCESS, SEARCH_SURVEYS_FAIL, SEARCH_SURVEYS_REQUEST, SEARCH_SURVEYS_RESET, SEARCH_SURVEYS_SUCCESS, UPDATE_SURVEY_FAIL, UPDATE_SURVEY_REQUEST, UPDATE_SURVEY_RESET, UPDATE_SURVEY_SUCCESS } from "../constants/SurveyConstants";
 
 
 const GET_ALL_SURVEY_INITIAL_STATE = {
@@ -119,7 +119,7 @@ const GET_ALL_SURVEY_INITIAL_STATE = {
   ) => {
     switch (action.type) {
       case DELETE_SURVEY_REQUEST:
-    //   case UPDATE_BRAND_REQUEST:
+      case UPDATE_SURVEY_REQUEST:
         return { ...state, loading: true };
   
       case DELETE_SURVEY_SUCCESS:
@@ -130,27 +130,27 @@ const GET_ALL_SURVEY_INITIAL_STATE = {
           message : action.payload.message
         };
   
-    //   case UPDATE_BRAND_SUCCESS:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       isUpdated: true,
-    //       message : action.payload.message 
+      case UPDATE_SURVEY_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          isUpdated: true,
+          message : action.payload.message 
         
-    //     };
+        };
   
       case DELETE_SURVEY_FAIL:
-    //   case UPDATE_BRAND_FAIL:
+      case UPDATE_SURVEY_FAIL:
         return { ...state, error: action.payload.error };
   
       case DELETE_SURVEY_RESET:
         return {
           ...DELETE_UPDATE_SURVEY_INITIAL_STATE
         };
-    //   case UPDATE_BRAND_RESET:
-    //     return {
-    //       ...DELETE_UPDATE_USER_INITIAL_STATE
-    //     };
+      case UPDATE_SURVEY_RESET:
+        return {
+          ...DELETE_UPDATE_SURVEY_INITIAL_STATE
+        };
       default:
         return state;
     }
