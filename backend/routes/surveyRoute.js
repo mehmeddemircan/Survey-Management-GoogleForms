@@ -10,6 +10,8 @@ const {
   saveResponses,
   surveySearchQuery,
   addQuestionsToSurvey,
+  submitSurveyAnswers,
+  getSurveyDetailsForUser,
 } = require("../controllers/surveyController");
 const {
   isRequestValidated,
@@ -30,5 +32,8 @@ router.route("/surveys/:id/update").put(updateSurvey);
 router.route('/surveys/:surveyId/addQuestions').post(addQuestionsToSurvey)
 
 router.route("/surveys/search").get(surveySearchQuery);
+router.route('/submit').post(submitSurveyAnswers);
+
+router.route('/user/surveys/:id/details').get(getSurveyDetailsForUser)
 
 module.exports = router;
