@@ -36,7 +36,7 @@ function App() {
           index
           path="/"
           element={
-            <PrivateRoute authenticate={auth.loading === false ? true : false}>
+            <PrivateRoute >
               <HomePage />
             </PrivateRoute>
           }
@@ -48,7 +48,7 @@ function App() {
         <Route
           path="/kullanicilar"
           element={
-            <PrivateRoute authenticate={auth.loading === false ? true : false}>
+            <PrivateRoute >
               <UsersPage />
             </PrivateRoute>
           }

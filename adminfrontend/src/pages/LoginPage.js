@@ -52,7 +52,6 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth.authenticate) {
-      message.success(auth.message)
       navigate('/', { replace: true });
     }
    

@@ -26,7 +26,7 @@ const SurveyPreviewPage = () => {
   useEffect(() => {
     dispatch(GetSingleSurveyPreview(id));
     dispatch(AllQuestionOfSurvey(id));
-  }, [dispatch]);
+  }, [dispatch,id]);
 
   const [responses, setResponses] = useState({});
 
