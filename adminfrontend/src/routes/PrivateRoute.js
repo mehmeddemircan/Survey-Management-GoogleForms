@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 // Custom PrivateRoute component
-const PrivateRoute = ({ authenticate,children }) => {
+const PrivateRoute = ({ children }) => {
 
   const auth = useSelector((state) => state.auth)
   const {loading} = useSelector((state) => state.auth)
 
   // Render loading state if authentication status is still being determined
  
-  if (authenticate) {
+  if (auth.authenticate) {
     // Render the protected page if user is authenticated
     return  children;
   } else {
