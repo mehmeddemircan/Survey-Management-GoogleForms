@@ -12,6 +12,9 @@ const AddSurveyModal = ({ showAddSurveyModal, handleCloseAddSurveyModal }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [imageLength, setImageLength] = useState(0);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [createdBy, setCreatedBy] = useState(user._id)
+
 
   const dispatch = useDispatch();
   const onPreview = async (file) => {
@@ -72,7 +75,7 @@ const AddSurveyModal = ({ showAddSurveyModal, handleCloseAddSurveyModal }) => {
   const navigate = useNavigate();
   const createSurvey = useSelector((state) => state.survey.createSurvey);
   const handleCreateSurvey = () => {
-    dispatch(CreateSurvey({ title, description, image }));
+    dispatch(CreateSurvey({ title, description, image , createdBy }));
   };
 
   useEffect(() => {
@@ -95,6 +98,7 @@ const AddSurveyModal = ({ showAddSurveyModal, handleCloseAddSurveyModal }) => {
         onOk={handleCreateSurvey}
         onCancel={handleCloseAddSurveyModal}
       >
+        
         <AddEditSurveyForm
           title={title}
           setTitle={setTitle}
