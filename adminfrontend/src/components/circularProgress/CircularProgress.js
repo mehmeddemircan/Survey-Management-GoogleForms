@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Progress } from "antd";
+import { Button, Progress } from "antd";
 import InfoTooltip from "../tooltip/InfoTooltip";
 
 const CircularProgress = ({ question }) => {
@@ -28,6 +28,7 @@ const CircularProgress = ({ question }) => {
   //   });
 
   const percentage = Math.round(totalResponses / totalOptions);
+
   const colors = ["#f5222d", "#fa8c16", "#1890ff", "#52c41a", "#722ed1"];
 
   const optionsWithColor = Object.entries(optionPercentages)
@@ -40,10 +41,10 @@ const CircularProgress = ({ question }) => {
 
   return (
     <Fragment>
-      <Progress type="circle" percent={percentage} />
+     
       <div style={{ marginLeft: 32 }}>
         {optionsWithColor.map(({ option, percentage, color }) => (
-            <InfoTooltip >
+       
                  <div
             key={option}
             style={{ display: "flex", alignItems: "center", marginBottom: 8 }}
@@ -56,12 +57,12 @@ const CircularProgress = ({ question }) => {
                 marginRight: 8,
               }}
             />
-            <div>{option}</div>
-            <div style={{ marginLeft: "auto", fontWeight: "bold" }}>
-              {Math.round(percentage)}%
-            </div>
+                <button className="btn" style={{minWidth:'25vw',border : `1px solid ${color}`}} >{option}  <div className="d-inline-block" style={{ marginLeft: "auto", fontWeight: "bold" }}>
+              {Math.round(percentage)} %
+            </div></button>
+           
           </div>
-            </InfoTooltip>
+          
         ))}
       </div>
     </Fragment>
