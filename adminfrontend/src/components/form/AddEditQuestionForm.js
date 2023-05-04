@@ -1,11 +1,14 @@
 import { Form, Input, Select, Radio, Space, Button } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import RequiredSwitch from "../switch/RequiredSwitch";
 import TextArea from "antd/es/input/TextArea";
+import { useSelector } from "react-redux";
 const { Option } = Select;
 
 const AddEditQuestionForm = ({
+  form,
+
   isEditForm,
   isRequired,
   questionText,
@@ -19,27 +22,49 @@ const AddEditQuestionForm = ({
   handleAddOption,
   onRequiredChange,
   options, 
-  setOptions
+  setOptions,
+
 }) => {
+
+
+
   return (
+  
     <Form
+    form={form}
       className="mx-auto"
       style={{
         maxWidth: 600,
       }}
       layout="vertical"
+   // initialValues={{ questionText: "", questionType: "" , isRequired : false }}   
     >
+  
       <div className="d-flex justify-content-between">
-        <Form.Item name="title" label="Soru" className="mt-3">
+        <Form.Item name="title" label="Soru" className="mt-3" 
+          rules={[
+            {
+              required: true,
+              message: "Soru başlığını doldurunuz lütfen !",
+            },
+          ]}
+        >
           <Input
             type="text"
             placeholder="Soruyu yazınız "
-            defaultValue={questionText}
+            defaultValue={isEditForm ? questionText : ""}
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
           />
         </Form.Item>
-        <Form.Item name="questionType" label="Soru Tipi" className="mt-3">
+        <Form.Item name="questionType" label="Soru Tipi" className="mt-3"
+           rules={[
+            {
+              required: true,
+              message: "Soru tipini şeçiniz lütfen !",
+            },
+          ]}
+        >
           <Select
             showSearch
             style={{
@@ -47,7 +72,8 @@ const AddEditQuestionForm = ({
             }}
             placeholder="Search to Select"
             onChange={handleSelectQuestionType}
-            defaultValue={questionType}
+            defaultValue={isEditForm ? questionType : ""}
+            value={questionType}
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.label ?? "").includes(input)
@@ -161,10 +187,12 @@ const AddEditQuestionForm = ({
           </Form.List>
         </>
       )}
+      <Form.Item name="isRequired" className="mt-3">
       <div className="d-inline-flex">
         <p className="me-3">Gerekli</p>
         <RequiredSwitch isRequired={isRequired} onRequiredChange={onRequiredChange} />
       </div>
+      </Form.Item>
     </Form>
   );
 };
