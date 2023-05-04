@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 
 import ImgCrop from "antd-img-crop";
 import { CameraFilled } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 const AddEditSurveyForm = ({
   title,
   setTitle,
@@ -30,16 +31,12 @@ const AddEditSurveyForm = ({
           name="title"
           label="Başlık"
           className="mt-3"
-          // rules={[
-          //   {
-          //     type: "name",
-          //     message: "The input is not valid E-mail!",
-          //   },
-          //   {
-          //     required: true,
-          //     message: "Please input your E-mail!",
-          //   },
-          // ]}
+          rules={[
+            {
+              required: true,
+              message: "Anket başlığı giriniz lütfen !",
+            },
+          ]}
         >
           <Input
             type="text"
@@ -53,26 +50,19 @@ const AddEditSurveyForm = ({
           name="description"
           label="Açıklama"
           className="mt-3"
-          // rules={[
-          //   {
-          //     type: "name",
-          //     message: "The input is not valid E-mail!",
-          //   },
-          //   {
-          //     required: true,
-          //     message: "Please input your E-mail!",
-          //   },
-          // ]}
+         
         >
-          <Input
-            type="text"
-            placeholder="Anket açıklaması..."
-            defaultValue={description}
+         <TextArea
+            showCount 
+            rows={5}
+            placeholder="Açıklama yaz.."
             value={description}
+            defaultValue={description}
             onChange={(e) => setDescription(e.target.value)}
+            maxLength={250}
           />
         </Form.Item>
-        <Form.Item name="images" label="Thumbnail Image">
+        <Form.Item name="images" label="Anket Fotoğraf">
           <ImgCrop rotationSlider>
             <Upload
               {...uploadProps}
