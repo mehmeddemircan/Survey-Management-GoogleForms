@@ -199,7 +199,7 @@ exports.sendSurveyToEmail = catchAsyncErrors(async (req, res, next) => {
     }
  
 
-      const goToSurvey = `http://localhost:3000/anketler/${surveyId}`
+      const goToSurvey = `https://akinsoftanket-user.onrender.com/anketler/${surveyId}`
 
       const message = `
         <h1>Anket Formu </h1>

@@ -90,7 +90,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   
         await user.save()
   
-        const resetUrl = `http://localhost:4000/password/reset/${resetToken}`
+        const resetUrl = `https://akinsoftanket-admin.onrender.com/password/reset/${resetToken}`
   
         const message = `
           <h1>Sifre yenilemek için istek attınız </h1>

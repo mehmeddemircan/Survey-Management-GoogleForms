@@ -9,7 +9,7 @@ function App() {
         <Router>
           <Routes>
             <Route index path='/anketler/:id' element={<SurveyDetailsPage />} />
-            <Route  path='/*' element={<NotFoundPage />} />
+            <Route  path='*' element={<NotFoundPage />} />
           </Routes>
         </Router>
   );
