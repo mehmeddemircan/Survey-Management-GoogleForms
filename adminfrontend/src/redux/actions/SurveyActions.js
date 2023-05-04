@@ -139,7 +139,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/surveys/${surveyId}/details`
+        `https://akinsoftanketapi.onrender.com/api/user/surveys/${surveyId}/details`
       );
   
       dispatch({
