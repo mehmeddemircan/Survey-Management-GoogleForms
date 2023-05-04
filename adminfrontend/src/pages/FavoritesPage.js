@@ -31,7 +31,6 @@ const FavoritesPage = () => {
   }, [dispatch, auth, addRemoveFavorite.isAdded, addRemoveFavorite.isRemoved]);
   return (
     <MainLayout>
-      <h2>hello favorite page</h2>
       {getUserFavorites.loading ? (
         <LoadingSpinner />
       ) : getUserFavorites.data.favorites.length === 0 ? (

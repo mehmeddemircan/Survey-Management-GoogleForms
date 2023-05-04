@@ -2,10 +2,10 @@ import { Switch } from 'antd';
 
 const RequiredSwitch = ({onRequiredChange, isRequired}) => {
 
-  
+
 
     return (
-        <Switch defaultChecked={isRequired} onChange={onRequiredChange} />
+        <Switch  checked={isRequired} onChange={onRequiredChange} />
     )
 };
 export default RequiredSwitch;

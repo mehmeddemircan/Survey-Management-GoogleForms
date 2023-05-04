@@ -19,6 +19,8 @@ import LoadingSpinner from "../spinner/LoadingSpinner";
 import EmptyComponent from "../empty/EmptyComponent";
 
 const QuestionTabSegment = () => {
+
+
   const getSingleSurvey = useSelector((state) => state.survey.getSingleSurvey);
 
   const [showAddQuestionModal, setShowAddQuestionModal] = useState(false);
@@ -74,7 +76,7 @@ const QuestionTabSegment = () => {
           handleCloseAddQuestionModal={handleCloseAddQuestionModal}
         />
       </div>
-        {getSingleSurvey.loading ? <LoadingSpinner />  : <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} />}
+    {getSingleSurvey.loading ? <LoadingSpinner />   : getSingleSurvey.success ?  <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} /> : null} 
 
       <h6>Sorular</h6>
       <hr />
