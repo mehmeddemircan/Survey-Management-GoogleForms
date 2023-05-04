@@ -18,7 +18,7 @@ import {
 export const Login = (user) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-    const res = await axios.post(`http://localhost:5000/api/login`, {
+    const res = await axios.post(`https://akinsoftanketapi.onrender.com/api/login`, {
       ...user,
     });
 
@@ -54,7 +54,7 @@ export const register = (user) => async (dispatch) => {
 
 
     
-    const res = await axios.post("http://localhost:5000/api/register", user);
+    const res = await axios.post("https://akinsoftanketapi.onrender.com/api/register", user);
 
     // Success
     if (res.status >= 200 && res.status <= 205) {
@@ -128,7 +128,7 @@ export const ForgotPassword = (user) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("http://localhost:5000/api/password/forgot", user, config);
+    const { data } = await axios.post("https://akinsoftanketapi.onrender.com/api/password/forgot", user, config);
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
@@ -154,7 +154,7 @@ export const ResetPassword = (token, passwords) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/password/reset/${token}`,
+      `https://akinsoftanketapi.onrender.com/api/password/reset/${token}`,
       passwords,
       config
     );

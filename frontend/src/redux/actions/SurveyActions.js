@@ -10,7 +10,7 @@ import { GET_ALL_QUESTION_FAIL, GET_ALL_QUESTION_REQUEST, GET_ALL_QUESTION_SUCCE
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/surveys/${surveyId}/details`
+        `https://akinsoftanketapi.onrender.com/api/user/surveys/${surveyId}/details`
       );
   
       dispatch({
@@ -33,7 +33,7 @@ import { GET_ALL_QUESTION_FAIL, GET_ALL_QUESTION_REQUEST, GET_ALL_QUESTION_SUCCE
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/surveys/${surveyId}/questions`
+        `https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/questions`
       );
   
       dispatch({
@@ -55,7 +55,7 @@ import { GET_ALL_QUESTION_FAIL, GET_ALL_QUESTION_REQUEST, GET_ALL_QUESTION_SUCCE
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/submit`,response
+        `https://akinsoftanketapi.onrender.com/api/submit`,response
       );
   
       dispatch({

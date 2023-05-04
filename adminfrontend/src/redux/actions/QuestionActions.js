@@ -22,7 +22,7 @@ export const AllQuestionOfSurvey = (surveyId) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/surveys/${surveyId}/questions`
+      `https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/questions`
     );
 
     dispatch({
@@ -44,7 +44,7 @@ export const CreateQuestion = (question) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/create-question`,
+      `https://akinsoftanketapi.onrender.com/api/create-question`,
       question
     );
 
@@ -67,7 +67,7 @@ export const DeleteQuestion = (surveyId, questionId) => async (dispatch) => {
     });
 
     const { data } = await axios.delete(
-      `http://localhost:5000/api/surveys/${surveyId}/questions/${questionId}/delete`
+      `https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/questions/${questionId}/delete`
     );
 
     dispatch({
@@ -90,7 +90,7 @@ export const UpdateQuestion = (questionId, question) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/questions/${questionId}/update`,question
+      `https://akinsoftanketapi.onrender.com/api/questions/${questionId}/update`,question
     );
 
     dispatch({

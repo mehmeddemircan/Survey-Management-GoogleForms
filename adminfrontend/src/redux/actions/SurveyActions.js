@@ -8,7 +8,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
         type: GET_ALL_SURVEY_REQUEST,
       });
   
-      const { data } = await axios.get(`http://localhost:5000/api/get-surveys?limit=${limit}&page=${page}`);
+      const { data } = await axios.get(`https://akinsoftanketapi.onrender.com/api/get-surveys?limit=${limit}&page=${page}`);
   
       dispatch({
         type: GET_ALL_SURVEY_SUCCESS,
@@ -28,7 +28,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
         type: CREATE_SURVEY_REQUEST,
       });
   
-      const { data } = await axios.post(`http://localhost:5000/api/create-survey`,survey);
+      const { data } = await axios.post(`https://akinsoftanketapi.onrender.com/api/create-survey`,survey);
   
       dispatch({
         type: CREATE_SURVEY_SUCCESS,
@@ -49,7 +49,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
         type: DELETE_SURVEY_REQUEST,
       });
   
-      const { data } = await axios.delete(`http://localhost:5000/api/surveys/${surveyId}/delete`);
+      const { data } = await axios.delete(`https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/delete`);
   
       dispatch({
         type: DELETE_SURVEY_SUCCESS,
@@ -69,7 +69,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
         type: UPDATE_SURVEY_REQUEST,
       });
   
-      const { data } = await axios.put(`http://localhost:5000/api/surveys/${surveyId}/update`,survey);
+      const { data } = await axios.put(`https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/update`,survey);
   
       dispatch({
         type: UPDATE_SURVEY_SUCCESS,
@@ -91,7 +91,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/surveys/search?title=${title}`
+        `https://akinsoftanketapi.onrender.com/api/surveys/search?title=${title}`
       );
   
       dispatch({
@@ -114,7 +114,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/surveys/${surveyId}/details`
+        `https://akinsoftanketapi.onrender.com/api/surveys/${surveyId}/details`
       );
   
       dispatch({

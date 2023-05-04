@@ -9,7 +9,7 @@ export const AllUser = (limit,page) => async (dispatch) => {
         type: GET_ALL_USER_REQUEST,
       });
   
-      const { data } = await axios.get(`http://localhost:5000/api/users?limit=${limit}&page=${page}`);
+      const { data } = await axios.get(`https://akinsoftanketapi.onrender.com/api/users?limit=${limit}&page=${page}`);
   
       dispatch({
         type: GET_ALL_USER_SUCCESS,
@@ -31,7 +31,7 @@ export const DeleteUser = (userId) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `http://localhost:5000/api/users/${userId}/delete`
+        `https://akinsoftanketapi.onrender.com/api/users/${userId}/delete`
       );
   
       dispatch({
@@ -54,7 +54,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/${userId}/favorites`
+        `https://akinsoftanketapi.onrender.com/api/users/${userId}/favorites`
       );
   
       dispatch({
@@ -76,7 +76,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `http://localhost:5000/api/users/${userId}/surveys/${surveyId}/add-favorite`
+        `https://akinsoftanketapi.onrender.com/api/users/${userId}/surveys/${surveyId}/add-favorite`
       );
   
       dispatch({
@@ -98,7 +98,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `http://localhost:5000/api/users/${userId}/surveys/${surveyId}/remove-favorite`
+        `https://akinsoftanketapi.onrender.com/api/users/${userId}/surveys/${surveyId}/remove-favorite`
       );
   
       dispatch({
@@ -129,7 +129,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       };
  
       const { data } = await axios.get(
-        `http://localhost:5000/api/profile/me`,config
+        `https://akinsoftanketapi.onrender.com/api/profile/me`,config
       );
   
       dispatch({
@@ -160,7 +160,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       };
  
       const { data } = await axios.put(
-        `http://localhost:5000/api/profile/update`,user,config
+        `https://akinsoftanketapi.onrender.com/api/profile/update`,user,config
       );
       localStorage.setItem("user", JSON.stringify(data.user))
       localStorage.setItem("token",data.token)
