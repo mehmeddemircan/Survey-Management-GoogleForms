@@ -1,4 +1,4 @@
-import { Card, Image } from "antd";
+import { Card, Image, message } from "antd";
 import React, { Fragment, useState } from "react";
 import InfoTooltip from "../tooltip/InfoTooltip";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,22 +9,21 @@ import {
 } from "../../redux/actions/UserActions";
 import EditSurveyModal from "../modal/survey/EditSurveyModal";
 import { useNavigate, useParams } from "react-router-dom";
+import SurveyDescriptions from "../descriptions/SurveyDescriptions";
+import InfoPopconfirm from "../popconfirm/InfoPopconfirm";
 
-const SurveyCard = ({ survey, isDetailsCard }) => {
-
-  const {id} = useParams()
-  const navigate = useNavigate()
+const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const handleDeleteSurvey = (surveyId) => {
-    if (
-      window.confirm(`${survey.title} silmek istedğinizden emin misiniz ? `)
-    ) {
+   
       dispatch(DeleteSurvey(surveyId));
       if (survey._id === id) {
-        navigate('/',{replace: true})
+        navigate("/", { replace: true });
       }
-    }
+   
   };
   const auth = useSelector((state) => state.auth);
   const getUserFavorites = useSelector((state) => state.user.getUserFavorites);
@@ -45,15 +44,15 @@ const SurveyCard = ({ survey, isDetailsCard }) => {
     (favorite) => favorite._id === survey._id
   );
 
-  const [showEditSurveyModal, setShowEditSurveyModal] = useState(false)
+  const [showEditSurveyModal, setShowEditSurveyModal] = useState(false);
 
   const handleShowEditSurveyModal = () => {
-    setShowEditSurveyModal(true)
-  }
+    setShowEditSurveyModal(true);
+  };
 
   const handleCloseEditSurveyModal = () => {
-    setShowEditSurveyModal(false)
-  }
+    setShowEditSurveyModal(false);
+  };
 
   return (
     <Fragment>
@@ -62,62 +61,69 @@ const SurveyCard = ({ survey, isDetailsCard }) => {
         type="inner"
         title={survey.title}
         extra={[
-          <div className="d-inline-flex align-items-center">
-            {isDetailsCard ? null : (
-              <a href={`/anketler/${survey._id}`}>Daha Fazlası</a>
-            )}
-            <InfoTooltip text="Favorilere Ekle">
-              <button
-                className="btn btn-light btn-sm ms-2"
-                href="#"
-                onClick={() => handleToggleFavorite(survey._id)}
-              >
-                {isSurveyInFavorites ? (
-                  <i class="fa-solid fa-heart fs-6"></i>
-                ) : (
-                  <i class="fa-regular fa-heart fs-6"></i>
-                )}
-              </button>
-            </InfoTooltip>
-            <InfoTooltip text="Anketi Düzenle">
-              <button
-                className="btn btn-light btn-sm ms-2"
-                href="#"
-                onClick={handleShowEditSurveyModal}
-              >
+          isPreviewCard ? null : <div className="d-inline-flex align-items-center">
+          {isDetailsCard ? null : (
+            <a href={`/anketler/${survey._id}`}>Daha Fazlası</a>
+          )}
+          <InfoTooltip text="Favorilere Ekle">
+            <button
+              className="btn btn-light btn-sm ms-2"
+              href="#"
+              onClick={() => handleToggleFavorite(survey._id)}
+            >
+              {isSurveyInFavorites ? (
+                <i class="fa-solid fa-heart fs-6"></i>
+              ) : (
+                <i class="fa-regular fa-heart fs-6"></i>
+              )}
+            </button>
+          </InfoTooltip>
+          <InfoTooltip text="Anketi Düzenle">
+            <button
+              className="btn btn-light btn-sm ms-2"
+              href="#"
+              onClick={handleShowEditSurveyModal}
+            >
               <i class="fa-solid fa-pen-to-square"></i>
-              </button>
-            </InfoTooltip>
+            </button>
+          </InfoTooltip>
 
-                  <EditSurveyModal 
-                    survey={survey}
-                    showEditSurveyModal={showEditSurveyModal}
-                    handleCloseEditSurveyModal={handleCloseEditSurveyModal}
-                  />
+          <EditSurveyModal
+            survey={survey}
+            showEditSurveyModal={showEditSurveyModal}
+            handleCloseEditSurveyModal={handleCloseEditSurveyModal}
+          />
 
-            <InfoTooltip text="Anketi Sil">
+          <InfoTooltip text="Anketi Sil">
+            <InfoPopconfirm
+              title="Anketi Silmek"
+              description={`${survey.title} silmek istediğiniz den emin misiniz ? `}
+              confirm={() => handleDeleteSurvey(survey._id)}
+   
+            >
               <button
                 className="btn btn-light btn-sm ms-2"
                 href="#"
-                onClick={() => handleDeleteSurvey(survey._id)}
+                // onClick={() => handleDeleteSurvey(survey._id)}
               >
                 <i class="fa-solid fa-x"></i>
               </button>
-            </InfoTooltip>
-          </div>,
+            </InfoPopconfirm>
+          </InfoTooltip>
+        </div>,
         ]}
       >
         <div className="d-flex justify-content-between">
-          <div>{survey.description}</div>
+          <SurveyDescriptions isPreviewCard={isPreviewCard} survey={survey} />
           <div>
-            {survey.image  ?  <Image
-              className="img-fluid"
-              width={300}
-              height={200}
-              src={
-                survey.image
-              }
-            /> : null}
+            {survey.image ? (
+              <Image
+                className="img-fluid"
+                width={300}
+                height={200}
+                src={survey.image}
+              />
+            ) : null}
           </div>
         </div>
       </Card>
