@@ -1,18 +1,14 @@
-import { Button, Form, Input, Modal, Radio, Select, Space } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import {Form, Button, Modal, Select } from "antd";
+
 import React, { useEffect, useState } from "react";
-import RequiredSwitch from "../../switch/RequiredSwitch";
+
 import { useDispatch, useSelector } from "react-redux";
-import {
-  CreateQuestion,
-  addOption,
-} from "../../../redux/actions/QuestionActions";
+import { CreateQuestion } from "../../../redux/actions/QuestionActions";
 import { useParams } from "react-router-dom";
-import AddQuestionForm from "../../form/AddEditQuestionForm";
+
 import AddEditQuestionForm from "../../form/AddEditQuestionForm";
 import ShowQuestionDrawer from "../../drawer/ShowQuestionDrawer";
-const { Option } = Select;
+
 const AddQuestionModal = ({
   showAddQuestionModal,
   handleCloseAddQuestionModal,
@@ -37,6 +33,25 @@ const AddQuestionModal = ({
   ]);
 
   const [options, setOptions] = useState([]);
+  const [form] = Form.useForm();
+  const resetForm = () => {
+    setSurveyId(`${id}`);
+    setQuestionText("");
+    setQuestionType("");
+    setIsRequired(false);
+    setOptionObjects([{ id: 0, option: "" }]);
+    setOptions([]);
+  };
+
+  const createQuestion = useSelector((state) => state.question.createQuestion);
+
+  useEffect(() => {
+    if (createQuestion.success) {
+      form.resetFields(); // reset the form fields
+      resetForm()
+      handleCloseAddQuestionModal();
+    }
+  }, [createQuestion.success,form, handleCloseAddQuestionModal, resetForm]);
 
   const handleSelectQuestionType = (value) => {
     setQuestionType(value);
@@ -56,7 +71,6 @@ const AddQuestionModal = ({
         isRequired,
       })
     );
-    handleCloseAddQuestionModal();
   };
 
   const handleAddOption = () => {
@@ -76,34 +90,31 @@ const AddQuestionModal = ({
     setOptions(filteredOptionStrings);
   }, [optionsObjects.length]);
 
-
-  const [showQuestionDrawer, setShowQuestionDrawer] = useState(false)
+  const [showQuestionDrawer, setShowQuestionDrawer] = useState(false);
 
   const handleShowQuestionDrawer = () => {
-    setShowQuestionDrawer(true)
-  }
+    setShowQuestionDrawer(true);
+  };
 
   const handleCloseShowQuestionDrawer = () => {
-    setShowQuestionDrawer(false)
-  }
+    setShowQuestionDrawer(false);
+  };
 
   const [question, setQuestion] = useState({
-    questionText : "",
-    questionType : "",
-    options : [],
-    isRequired : false 
-   
-
-  })
+    questionText: "",
+    questionType: "",
+    options: [],
+    isRequired: false,
+  });
 
   useEffect(() => {
     setQuestion({
-      questionText : questionText,
-      questionType : questionType,
-      options : options,
-      isRequired : isRequired
-    })
-  }, [questionText,questionType,options,isRequired])
+      questionText: questionText,
+      questionType: questionType,
+      options: options,
+      isRequired: isRequired,
+    });
+  }, [questionText, questionType, options, isRequired]);
   return (
     <Modal
       centered={true}
@@ -113,40 +124,38 @@ const AddQuestionModal = ({
       onCancel={handleCloseAddQuestionModal}
       footer={[
         <Button key="questionShow" onClick={handleShowQuestionDrawer}>
-        Ön İzleme Yap
-      </Button>,
-     
+          Ön İzleme Yap
+        </Button>,
 
-      <Button key="submit" type="primary"  onClick={handleAddQuestion}>
-        Onayla
-      </Button>,
-     
-    ]}
+        <Button key="submit" type="primary" onClick={handleAddQuestion}>
+          Onayla
+        </Button>,
+      ]}
+    >
     
-    > 
-
-       <ShowQuestionDrawer 
+      <ShowQuestionDrawer
         question={question}
-       
-      showQuestionDrawer={showQuestionDrawer}
-      handleCloseShowQuestionDrawer={handleCloseShowQuestionDrawer}
+        showQuestionDrawer={showQuestionDrawer}
+        handleCloseShowQuestionDrawer={handleCloseShowQuestionDrawer}
       />
       {options.map((option) => (
         <div>{option}</div>
       ))}
-      {options.length}
-        <AddEditQuestionForm 
-            questionText={questionText}
-            setQuestionText={setQuestionText}
-            handleSelectQuestionType={handleSelectQuestionType}
-            questionType={questionType}
-            questionTypes={questionTypes}
-            setQuestionType={setQuestionType}
-            optionsObjects={optionsObjects}
-            setOptionObjects={setOptionObjects}
-            handleAddOption={handleAddOption}
-            onRequiredChange={onRequiredChange}
-        />
+    
+      <AddEditQuestionForm
+        form={form}
+        questionText={questionText}
+        setQuestionText={setQuestionText}
+        handleSelectQuestionType={handleSelectQuestionType}
+        questionType={questionType}
+        questionTypes={questionTypes}
+        setQuestionType={setQuestionType}
+        optionsObjects={optionsObjects}
+        setOptionObjects={setOptionObjects}
+        handleAddOption={handleAddOption}
+        onRequiredChange={onRequiredChange}
+        isRequired={isRequired}
+      />
     </Modal>
   );
 };
