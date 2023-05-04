@@ -22,6 +22,11 @@ const surveySchema = new mongoose.Schema(
 
        }
     ],
+    createdBy : {
+      type : ObjectId ,
+      ref : 'User',
+      required : true 
+    }
 
   },
   { timestamps: true }
