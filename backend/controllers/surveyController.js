@@ -3,10 +3,11 @@ const Question = require("../models/Question");
 const Response = require("../models/Response");
 const Survey = require("../models/Survey");
 const cloudinary = require("cloudinary");
+const sendEmail = require("../utils/sendEmail");
 // Create a new survey
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
-    const { title, description, questions } = req.body;
+    const { title, description, questions ,createdBy} = req.body;
     let image;
 
     if (req.body.image) {
@@ -20,7 +21,7 @@ exports.createSurvey = catchAsyncErrors(async (req, res) => {
       description,
       image,
       questions,
-  
+      createdBy
     });
     await survey.save();
     res
@@ -46,7 +47,7 @@ exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
     const surveys = await Survey.find()
       .skip(skip)
       .limit(parseInt(limit))
-      .select("title description image");
+      .select('-questions -responses').populate('createdBy','firstname lastname');
 
     res.status(200).json({ data: surveys, totalSurveys });
   } catch (error) {
@@ -61,6 +62,7 @@ exports.getSurveyDetails = catchAsyncErrors(async (req, res) => {
         "questions",
         "questionType questionText options isRequired responses"
       )
+      .populate('createdBy','firstname lastname')
       .exec();
     res.status(200).json({ data: survey });
   } catch (error) {
@@ -185,3 +187,48 @@ exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+exports.sendSurveyToEmail = catchAsyncErrors(async (req, res, next) => {
+
+  const {surveyId,email} = req.body 
+
+  try {
+    const survey = await Survey.findById(surveyId);
+    if (!survey) {
+      return res.status(404).json({ message: 'Anket bulunamadı ' });
+    }
+ 
+
+      const goToSurvey = `http://localhost:3000/anketler/${surveyId}`
+
+      const message = `
+        <h1>Anket Formu </h1>
+        <p>Merhaba ${email}</p>
+        <p>anketi doldurmak için lütfen linke tıklayınız </p>
+        
+        <a href=${goToSurvey} clicktracking=off>${goToSurvey}</a>
+        `
+
+        try {
+          
+          await sendEmail({
+            to : email,
+            subject : "Anket Formu",
+            text: message
+          })
+          res.status(200).json({
+            message : `Başarılı Şekilde  ${email} hesabına mail atilmiştir`,
+          })
+        } catch (error) {
+    
+          res.status(500).json({
+            error : 'Email maalesef gönderilmemiştir'
+          })
+
+        }
+
+  } catch (error) {
+      next(error)
+  }
+
+})
