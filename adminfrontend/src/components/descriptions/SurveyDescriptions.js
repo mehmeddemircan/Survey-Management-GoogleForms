@@ -12,7 +12,7 @@ const SurveyDescriptions = ({isPreviewCard, survey }) => {
         style={{ display: "inline-block" }}
         label="Açıklama"
       >
-        {survey.description}
+        {survey.description.length === 0 ? "Açıklama belirtilmedi " : `${survey.description}`}
       </Descriptions.Item>
         {!isPreviewCard && ( 
              <>
