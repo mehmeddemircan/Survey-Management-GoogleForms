@@ -88,7 +88,12 @@ const AddQuestionModal = ({
       (option) => option.trim() !== ""
     );
     setOptions(filteredOptionStrings);
-  }, [optionsObjects.length]);
+    const lastOptionIndex = optionsObjects.length - 1;
+    if (optionsObjects[lastOptionIndex].option.trim() !== "" && lastOptionIndex === options.length - 1) {
+      const lastOption = optionsObjects[lastOptionIndex].option.trim();
+      setOptions([...options, lastOption]);
+    }
+  }, [optionsObjects]);
 
   const [showQuestionDrawer, setShowQuestionDrawer] = useState(false);
 
@@ -138,9 +143,7 @@ const AddQuestionModal = ({
         showQuestionDrawer={showQuestionDrawer}
         handleCloseShowQuestionDrawer={handleCloseShowQuestionDrawer}
       />
-      {options.map((option) => (
-        <div>{option}</div>
-      ))}
+    
     
       <AddEditQuestionForm
         form={form}
