@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import LoggedInSegment from "./LoggedInSegment";
 import NotLoggedInSegment from "./NotLoggedInSegment";
 import InfoBadge from "../badge/InfoBadge";
+import { useTranslation } from 'react-i18next';
 
 const MainHeader = () => {
   const auth = useSelector((state) => state.auth);
@@ -27,8 +28,8 @@ const MainHeader = () => {
     setShowMenu(!showMenu);
   };
 
-
-
+// // çoklu dil erişim
+  const {t} = useTranslation()
 
   return (
     <nav
@@ -39,10 +40,21 @@ const MainHeader = () => {
     >
       <div class="container py-3">
         <a class="navbar-brand" href="/">
-          AkınSoft
+          <img
+            src="https://www.akinsoft.com.tr/logo/images/akinsoft_logo.png?3"
+            width="30"
+            height="30"
+            alt=""
+          />
+          <a
+            className="ms-2"
+            style={{ color: "#222", textDecorationLine: "none" }}
+          >
+            AkınSoft
+          </a>
         </a>
 
-        {/* <HeaderMenuDropDown /> */}
+      
 
         <button
           className="navbar-toggler"
@@ -56,19 +68,15 @@ const MainHeader = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-           
             <li className="nav-item">
               <a className="nav-link" href="/kullanicilar">
-                Kullanicilar
+                {t('header.users')}
               </a>
             </li>
           </ul>
 
           <div>
             {/* globe */}
-            
-
-           
 
             {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
             <button
