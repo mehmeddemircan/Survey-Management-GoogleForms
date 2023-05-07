@@ -40,16 +40,16 @@ exports.remove = (req, res, next) => {
 
 
 exports.uploadImage = catchAsyncErrors(async(req,res,next)=> {
-    console.log('hello');
+   
     let result = await cloudinary.uploader.upload(req.body.image,{
         public_id: `${Date.now()}`,
         resource_type :  "auto"
     })
-    console.log('hello');
+  
     res.status(200).json({
         public_id : result.public_id,
         url : result.secure_url
     })
 
-    console.log('hello');
+
 })
