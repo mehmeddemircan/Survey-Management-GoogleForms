@@ -1,6 +1,8 @@
 {
     "header" : {
-        "login" : "Login"
-    },
-    "deletedAreaMessage" : "Basariyla silindi !"
+        "login" : "Login",
+        "favorites" : "My Favorites",
+        "users" : "Users"
+    }
+
  }

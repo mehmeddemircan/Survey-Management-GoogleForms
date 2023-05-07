@@ -1,6 +1,8 @@
 {
     "header" : {
-        "login" : "Giriş Yap"
-    },
-    "deletedAreaMessage" : "Basariyla silindi !"
+        "login" : "Giriş Yap",
+        "favorites" : "Favorilerim",
+        "users" : "Kullanıcılar"
+    }
+ 
  }
