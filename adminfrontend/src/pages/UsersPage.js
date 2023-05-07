@@ -11,6 +11,7 @@ import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import InfoBadge from "../components/badge/InfoBadge";
 import CustomPagination from "../components/pagination/CustomPagination";
 import { DELETE_USER_RESET } from "../redux/constants/UserConstants";
+import MetaTitle from "../meta/MetaTitle";
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,10 @@ const UsersPage = () => {
 
   return (
     <MainLayout>
-      <h4>Users Page</h4>
+        <MetaTitle title="Akınsoft Anket Kullanicilar" name="kullanicilar" content="kullanicilar" />
+      <h4 className="mt-3">Kullanicilar</h4>
       <InfoBreadcrumb
+   
         seperator=">"
         items={[
           {
