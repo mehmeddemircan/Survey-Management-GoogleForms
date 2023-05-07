@@ -3,8 +3,9 @@ import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/AuthActions";
 import { useNavigate } from "react-router-dom";
-import { Button, Popover } from "antd";
+import { Avatar, Button, Popover } from "antd";
 import InfoBadge from "../badge/InfoBadge";
+import { useTranslation } from "react-i18next";
 const LoggedInSegment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const LoggedInSegment = () => {
   const auth = useSelector((state) => state.auth);
 
   const getUserFavorites = useSelector((state) => state.user.getUserFavorites);
-
+  const {t} = useTranslation()
   return (
     <Fragment>
       <InfoBadge count={getUserFavorites.data.favorites.length}>
@@ -24,7 +25,7 @@ const LoggedInSegment = () => {
           onClick={() => navigate("/favorilerim", { replace: true })}
         >
           <i class="fa-solid fa-heart me-2"></i>
-          <a>Favoriler</a>
+          <a>{t('header.favorites')}</a>
         </button>
       </InfoBadge>
       <Popover
@@ -65,12 +66,10 @@ const LoggedInSegment = () => {
           style={{ border: "1px solid #fff" }}
         >
           <i class="fa-solid fa-bars mx-2 mt-1"></i>
-          <img
-            style={{ width: "25px" }}
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="img-fluid rounded-circle fs-4"
-            alt="Avatar"
-          />
+          <Avatar
+              src={auth.user && auth.user.avatar ? auth.user.avatar.url  : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"}
+              size={"small"}
+            />
         </button>
       </Popover>
     </Fragment>
