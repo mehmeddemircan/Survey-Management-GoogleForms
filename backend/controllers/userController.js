@@ -100,7 +100,7 @@ exports.addSurveyToFavorites = catchAsyncErrors( async (req, res) => {
   }
 });
 
-exports.removeFromFavorites = async (req, res) => {
+exports.removeFromFavorites = catchAsyncErrors(async (req, res) => {
   const { userId, surveyId } = req.params;
 
   try {
@@ -115,9 +115,9 @@ exports.removeFromFavorites = async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
   }
-};
+});
 
-exports.getFavoriteSurveys = async (req, res) => {
+exports.getFavoriteSurveys = catchAsyncErrors(async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -138,4 +138,4 @@ exports.getFavoriteSurveys = async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
   }
-};
+});
