@@ -1,24 +1,26 @@
-import { Button, Form, Input ,Upload} from 'antd'
+import { Button, Card, Form, Input ,Upload} from 'antd'
 import React from 'react'
 import ImgCrop from "antd-img-crop";
 import { CameraFilled } from "@ant-design/icons";
 import { useDispatch } from 'react-redux';
 import { UpdateProfile } from '../../redux/actions/UserActions';
-const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,setEmail}) => {
+const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,setEmail, avatar, setAvatar, imageLength, setImageLength,uploadProps,onPreview}) => {
 
     const dispatch = useDispatch()
 
     const handleUpdateProfile = () => {
-        dispatch(UpdateProfile({firstname,lastname,email}))
+        dispatch(UpdateProfile({firstname,lastname,email,avatar}))
     }
 
   return (
-    <Form
+    <Card>
+       <Form
         className="mx-auto"
         style={{
           maxWidth: 600,
         }}
         layout="vertical"
+        
       >
         <Form.Item
           name="firstname"
@@ -89,49 +91,28 @@ const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,se
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
-        <Form.Item
-      label="Şifre"
-      name="password"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your password!',
-        },
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
-    <Form.Item
-      label="Şifre Tekrar"
-      name="confirmPassword"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your password!',
-        },
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
+    
+ 
     <Form.Item name="images" label="Profil Fotoğrafı">
           <ImgCrop rotationSlider>
             <Upload
-            //   {...uploadProps}
-            //   defaultFileList={image ? [{ url: image, name: "image" }] : []}
-            //   onPreview={onPreview}
-            //   onRemove={() => {
-            //     setImage("");
-            //     setImageLength(0);
-            //   }}
+              {...uploadProps}
+              defaultFileList={avatar ? [{ url: avatar, name: "image" }] : []}
+              onPreview={onPreview}
+              onRemove={() => {
+                setAvatar("");
+                setImageLength(0);
+              }}
               listType="picture-card"
             >
-              {/* {imageLength === 0 && <CameraFilled style={{ fontSize: 30 }} />} */}
-              <CameraFilled style={{ fontSize: 30 }} />
+              {imageLength === 0 && <CameraFilled style={{ fontSize: 30 }} />}
+       
             </Upload>
           </ImgCrop>
         </Form.Item>
         <Button type="primary" onClick={handleUpdateProfile} >Onayla</Button>
         </Form>
+    </Card>
   )
 }
 
