@@ -45,7 +45,7 @@ const AddSurveyModal = ({ showAddSurveyModal, handleCloseAddSurveyModal }) => {
           (uri) => {
             // Send the resized image to the server
             axios
-              .post("http://localhost:5000/api/uploadimages", {
+              .post("https://akinsoftanketapi.onrender.com/api/uploadimages", {
                 image: uri,
               })
               .then((response) => {
