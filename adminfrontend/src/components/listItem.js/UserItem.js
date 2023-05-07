@@ -33,8 +33,8 @@ const UserItem = ({ user }) => {
             />
           )
         }
-        title={<a>{user.firstname}</a>}
-        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        title={<><a>{user.firstname}</a><a className="ms-2" style={{textDecorationLine:'none'}}>{user.lastname}</a></>}
+        description={user.email}
       />
     </List.Item>
   );
