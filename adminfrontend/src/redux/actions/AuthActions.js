@@ -128,7 +128,7 @@ export const ForgotPassword = (user) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("https://akinsoftanketapi.onrender.com/api/password/forgot", user, config);
+    const { data } = await axios.post("https://akinsoftanketapi.onrender.com/api/forgot-password", user, config);
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
@@ -154,7 +154,7 @@ export const ResetPassword = (token, passwords) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `https://akinsoftanketapi.onrender.com/api/password/reset/${token}`,
+      `https://akinsoftanketapi.onrender.com/api/reset-password/${token}`,
       passwords,
       config
     );
