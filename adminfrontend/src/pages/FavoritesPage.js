@@ -10,6 +10,7 @@ import {
 } from "../redux/constants/UserConstants";
 import LoadingSpinner from "../components/spinner/LoadingSpinner";
 import EmptyComponent from "../components/empty/EmptyComponent";
+import MetaTitle from "../meta/MetaTitle";
 
 const FavoritesPage = () => {
   const getUserFavorites = useSelector((state) => state.user.getUserFavorites);
@@ -31,6 +32,7 @@ const FavoritesPage = () => {
   }, [dispatch, auth, addRemoveFavorite.isAdded, addRemoveFavorite.isRemoved]);
   return (
     <MainLayout>
+            <MetaTitle title="Akınsoft Favori Anketlerim" name="favorilerim" content="Akınsoft favorilerim" />
       {getUserFavorites.loading ? (
         <LoadingSpinner />
       ) : getUserFavorites.data.favorites.length === 0 ? (
