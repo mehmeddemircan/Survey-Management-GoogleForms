@@ -1,6 +1,6 @@
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Question = require("../models/Question");
-const Response = require("../models/Response");
+
 const Survey = require("../models/Survey");
 const cloudinary = require("cloudinary");
 const sendEmail = require("../utils/sendEmail");
