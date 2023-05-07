@@ -12,9 +12,9 @@ const SurveyCard = () => {
         type="inner"
         title={survey.title}
       >
-        <div className="d-flex justify-content-between">
-          <div>{survey.description}</div>
-          <div>
+        <div className="row">
+          <div className='col-md-6 col-sm-12'>{survey.description}</div>
+          <div className='col-md-6 col-sm-12 text-end mt-3'>
             {survey.image  ?  <Image
               className="img-fluid"
               width={300}
