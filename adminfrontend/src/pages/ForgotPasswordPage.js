@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import { useNavigate } from "react-router-dom";
+import MetaTitle from "../meta/MetaTitle";
+import { useDispatch, useSelector } from "react-redux";
+import { ForgotPassword } from "../redux/actions/AuthActions";
+import { message } from "antd";
+import { FORGOT_PASSSWORD_RESET } from "../redux/constants/AuthConstants";
 
 const ForgotPasswordPage = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState("")
+    const forgotResetPassword = useSelector((state) => state.forgotResetPassword)
+    const handleForgotPassword = () => {
+        dispatch(ForgotPassword({email}))
+    }
+
+    useEffect(() => {
+        if (forgotResetPassword.forgotSuccess) {
+          message.success(forgotResetPassword.message)
+          setEmail("")
+          dispatch({type : FORGOT_PASSSWORD_RESET})
+        }
+        
+    }, [forgotResetPassword.forgotSuccess])
+
+
+
 
   return (
     <MainLayout>
+            <MetaTitle title="Akınsoft Şifremi Unuttum" name="şifremiunuttum" content="Akınsoft şifremi unuttum" />
          <div className="container h-100 my-4">
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col-lg-12 col-xl-11">
@@ -33,8 +57,8 @@ const ForgotPasswordPage = () => {
                           id="form3Example3c"
                           className="form-control"
                           placeholder="name@example.com"
-                          //   value={veri.email}
-                          //   onChange={(e) => setVeri({...veri, email: e.target.value})}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
@@ -43,7 +67,7 @@ const ForgotPasswordPage = () => {
                       <button
                         type="button"
                         className="btn btn-primary btn-md rounded-pill"
-                        // onClick={control}
+                        onClick={handleForgotPassword}
                       >
                         Mail Gonder
                       </button>
