@@ -52,12 +52,23 @@ const EditQuestionModal = ({question,showEditQuestionModal,handleCloseEditQuesti
     ]);
   };
   useEffect(() => {
-    const optionStrings = optionsObjects.map((option) => option.option);
-    const filteredOptionStrings = optionStrings.filter(
-      (option) => option.trim() !== ""
-    );
-    setOptions(filteredOptionStrings);
-  }, [optionsObjects.length]);
+    if (optionsObjects.length > 0 ) {
+      const optionStrings = optionsObjects.map((option) => option.option);
+      const filteredOptionStrings = optionStrings.filter(
+        (option) => option.trim() !== ""
+      );
+      setOptions(filteredOptionStrings);
+      const lastOptionIndex = optionsObjects.length - 1;
+      if (
+        lastOptionIndex === options.length &&
+        optionsObjects[lastOptionIndex].option.trim() !== "" &&
+        !options.includes(optionsObjects[lastOptionIndex].option.trim())
+      ) {
+        // If it's not, add the last option to the options array
+        setOptions([...options, optionsObjects[lastOptionIndex].option.trim()]);
+      }
+    }
+  }, [optionsObjects,optionsObjects.length]);
 
 
 
