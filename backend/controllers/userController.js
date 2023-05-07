@@ -71,12 +71,12 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
 
     const updatedUser = await user.save();
 
-    sendToken(updatedUser, 200, res, "Successfully updated account");
+    sendToken(updatedUser, 200, res, "Başarılı Şekilde profil güncellenmiştir");
   } else {
     // return next(new ErrorHandler('User not found , not updated '))
     res.status(404).json({
       success: false,
-      error: "User not found ,not updated",
+      error: "Kullanıcı bulunamadı , güncelleme olmadı ",
     });
   }
 });
@@ -90,10 +90,10 @@ exports.addSurveyToFavorites = catchAsyncErrors( async (req, res) => {
     const user = await User.findByIdAndUpdate(userId, { $addToSet: { favorites: surveyId } }, { new: true }).populate('favorites');
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
     }
 
-    return res.status(200).json({ message: 'Survey added to favorites', favorites: user.favorites });
+    return res.status(200).json({ message: 'Anket Başarılı şekilde favorilere eklendi', favorites: user.favorites });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
@@ -107,10 +107,10 @@ exports.removeFromFavorites = async (req, res) => {
     const user = await User.findByIdAndUpdate(userId, { $pull: { favorites: surveyId } }, { new: true }).populate('favorites');
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
     }
 
-    return res.status(200).json({ message: 'Survey removed from favorites', favorites: user.favorites });
+    return res.status(200).json({ message: 'Anket favorilerden çıkarıldı', favorites: user.favorites });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
@@ -130,7 +130,7 @@ exports.getFavoriteSurveys = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
     }
 
     return res.status(200).json({ favorites: user.favorites });
