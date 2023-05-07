@@ -7,7 +7,7 @@ const sendEmail = require("../utils/sendEmail");
 // Create a new survey
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
-    const { title, description, questions ,createdBy} = req.body;
+    const { title, description, questions, createdBy } = req.body;
     let image;
 
     if (req.body.image) {
@@ -15,13 +15,12 @@ exports.createSurvey = catchAsyncErrors(async (req, res) => {
       image = result.secure_url;
     }
 
-
     const survey = new Survey({
       title,
       description,
       image,
       questions,
-      createdBy
+      createdBy,
     });
     await survey.save();
     res
@@ -47,7 +46,8 @@ exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
     const surveys = await Survey.find()
       .skip(skip)
       .limit(parseInt(limit))
-      .select('-questions -responses').populate('createdBy','firstname lastname');
+      .select("-questions -responses")
+      .populate("createdBy", "firstname lastname");
 
     res.status(200).json({ data: surveys, totalSurveys });
   } catch (error) {
@@ -62,7 +62,7 @@ exports.getSurveyDetails = catchAsyncErrors(async (req, res) => {
         "questions",
         "questionType questionText options isRequired responses"
       )
-      .populate('createdBy','firstname lastname')
+      .populate("createdBy", "firstname lastname")
       .exec();
     res.status(200).json({ data: survey });
   } catch (error) {
@@ -143,44 +143,42 @@ exports.addQuestionsToSurvey = catchAsyncErrors(async (req, res) => {
   }
 });
 
-
-
 exports.submitSurveyAnswers = catchAsyncErrors(async (req, res) => {
   try {
     const surveyId = req.body.surveyId;
     const surveyResponses = req.body;
-  
+
     // SurveyId'ye ait soruların listesini alın
     const surveyQuestions = await Question.find({ surveyId });
-  
+
     // Tüm sorular için cevapları kaydedin
     for (let i = 0; i < surveyQuestions.length; i++) {
       const questionId = surveyQuestions[i]._id;
       const response = surveyResponses[questionId];
-  
+
       if (!response) {
-        return res.status(400).send(`Soru cevapları eksik. Lütfen tüm soruları cevaplayın.`);
+        return res
+          .status(400)
+          .send(`Soru cevapları eksik. Lütfen tüm soruları cevaplayın.`);
       }
-  
+
       // Cevabı güncelle
-      await Question.findByIdAndUpdate(questionId, { $push: { responses: response } });
+      await Question.findByIdAndUpdate(questionId, {
+        $push: { responses: response },
+      });
     }
-  
+
     // Başarılı bir şekilde yanıt verin
-    return res.status(200).json({message : 'Cevaplar başarıyla kaydedildi.'});
+    return res.status(200).json({ message: "Cevaplar başarıyla kaydedildi." });
   } catch (error) {
-    res.status(500).json({error : error.message})
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id)
-      .populate(
-        "questions",
-        "questionType questionText options isRequired"
-      )
+      .populate("questions", "questionType questionText options isRequired")
       .exec();
     res.status(200).json({ data: survey });
   } catch (error) {
@@ -189,46 +187,49 @@ exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
 });
 
 exports.sendSurveyToEmail = catchAsyncErrors(async (req, res, next) => {
-
-  const {surveyId,email} = req.body 
+  const { surveyId, email } = req.body;
 
   try {
     const survey = await Survey.findById(surveyId);
     if (!survey) {
-      return res.status(404).json({ message: 'Anket bulunamadı ' });
+      return res.status(404).json({ message: "Anket bulunamadı " });
     }
- 
 
-      const goToSurvey = `https://akinsoftanket-user.onrender.com/anketler/${surveyId}`
+    const goToSurvey = `https://akinsoftanket-user.onrender.com/anketler/${surveyId}`;
 
-      const message = `
-        <h1>Anket Formu </h1>
-        <p>Merhaba ${email}</p>
-        <p>anketi doldurmak için lütfen linke tıklayınız </p>
-        
-        <a href=${goToSurvey} clicktracking=off>${goToSurvey}</a>
-        `
+    const message = `
+      <div style="background-color:#F2F2F2; padding:20px;">
+     
+      <div style="text-align:center">
+      <img src="https://www.akinsoft.com.tr/logo/images/akinsoft_dikey_logo.jpg" />
+      </div>
+     
+      <h1 style="text-align:center; color:#008CBA; font-size:36px; font-weight:bold;">Anket Formu</h1>
+      <p style="font-size:16px; color:#666; line-height:22px; text-align:center;">Merhaba ${email},<br>
+      Anketimizi doldurmak için aşağıdaki linke tıklayabilirsiniz:</p>
+      <div style="text-align:center;">
+        <a href=${goToSurvey} style="display:inline-block; background-color:#008CBA; color:#FFF; padding:10px 20px; font-size:18px; text-decoration:none; border-radius:5px;">Ankete Git</a>
+      </div>
+      </div>
+      </div>
+    </div>
+        `;
 
-        try {
-          
-          await sendEmail({
-            to : email,
-            subject : "Anket Formu",
-            text: message
-          })
-          res.status(200).json({
-            message : `Başarılı Şekilde  ${email} hesabına mail atilmiştir`,
-          })
-        } catch (error) {
-    
-          res.status(500).json({
-            error : 'Email maalesef gönderilmemiştir'
-          })
-
-        }
-
+    try {
+      await sendEmail({
+        to: email,
+        subject: "Anket Formu",
+        text: message,
+      });
+      res.status(200).json({
+        message: `Başarılı Şekilde  ${email} hesabına mail atilmiştir`,
+      });
+    } catch (error) {
+      res.status(500).json({
+        error: "Email maalesef gönderilmemiştir",
+      });
+    }
   } catch (error) {
-      next(error)
+    next(error);
   }
-
-})
+});
