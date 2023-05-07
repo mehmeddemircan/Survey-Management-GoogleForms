@@ -113,19 +113,25 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
         </div>,
         ]}
       >
-        <div className="d-flex justify-content-between">
-          <SurveyDescriptions isPreviewCard={isPreviewCard} survey={survey} />
-          <div>
-            {survey.image ? (
-              <Image
-                className="img-fluid"
-                width={300}
-                height={200}
-                src={survey.image}
-              />
-            ) : null}
-          </div>
-        </div>
+   <div class="row">
+  <div class="col-md-8">
+    <div class="d-flex flex-row justify-content-between">
+      <SurveyDescriptions isPreviewCard={isPreviewCard} survey={survey} />
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="d-flex justify-content-center">
+      {survey.image ? (
+        <Image
+          class="img-fluid"
+          width={300}
+          height={200}
+          src={survey.image}
+        />
+      ) : null}
+    </div>
+  </div>
+</div>
       </Card>
     </Fragment>
   );
