@@ -16,7 +16,7 @@ const NotLoggedInSegment = () => {
               style={{ border: "1px solid rgb(221,221,221)" }}
 
             >
-              <i class="fa-solid fa-bars mt-2 mx-2"></i>
+              <i class="fa-solid fa-bars  mx-2"></i>
      
               <a>Giriş Yap</a>
             </button>

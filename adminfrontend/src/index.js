@@ -30,7 +30,7 @@ i18next
       order: ["path", "cookie", "htmlTag"],
       caches: ["cookie"],
     },
-    // react: { useSuspense: false },
+    react: { useSuspense: false },
     backend: {
       loadPath: "/assets/locales/{{lng}}/translation.json",
     },

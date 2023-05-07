@@ -12,7 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import UsersPage from "./pages/UsersPage";
 import SurveyDetailsPage from "./pages/SurveyDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import { ADD_SURVEY_TO_FAVORITE_RESET, REMOVE_SURVEY_FROM_FAVORITE_RESET } from "./redux/constants/UserConstants";
+import {
+  ADD_SURVEY_TO_FAVORITE_RESET,
+  REMOVE_SURVEY_FROM_FAVORITE_RESET,
+} from "./redux/constants/UserConstants";
 import { message } from "antd";
 import ProfilePage from "./pages/ProfilePage";
 import SurveyPreviewPage from "./pages/SurveyPreviewPage";
@@ -21,12 +24,10 @@ function App() {
   const auth = useSelector((state) => state.auth);
   // When we fresh the page if you are in logged in  stay logged in
 
-
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-   
   }, [auth.authenticate]);
 
   return (
@@ -36,7 +37,7 @@ function App() {
           index
           path="/"
           element={
-            <PrivateRoute >
+            <PrivateRoute>
               <HomePage />
             </PrivateRoute>
           }
@@ -44,19 +45,47 @@ function App() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/password/reset/:token" element={<ResetPasswordPage />} />
         <Route
           path="/kullanicilar"
           element={
-            <PrivateRoute >
+         
               <UsersPage />
-            </PrivateRoute>
+      
           }
         />
-        <Route path="/anketler/:id" element={<SurveyDetailsPage />} />
-        <Route path="/favorilerim" element={<FavoritesPage />} />
-        <Route path="/profilim" element={<ProfilePage />} />
-        <Route path="/anketler/:id/onizleme" element={<SurveyPreviewPage />} />
+        <Route
+          path="/anketler/:id"
+          element={
+           
+              <SurveyDetailsPage />
+          
+          }
+        />
+        <Route
+          path="/favorilerim"
+          element={
+          
+              <FavoritesPage />
+         
+          }
+        />
+        <Route
+          path="/profilim"
+          element={
+         
+              <ProfilePage />
+       
+          }
+        />
+        <Route
+          path="/anketler/:id/onizleme"
+          element={
+         
+              <SurveyPreviewPage />
+          
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
