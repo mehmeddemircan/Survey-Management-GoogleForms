@@ -1,17 +1,23 @@
 import { Result } from 'antd'
-import React from 'react'
+import React, { Fragment } from 'react'
+import { useDispatch } from 'react-redux'
+import { SUBMIT_SURVEY_RESET } from '../../redux/constants/SurveyConstants'
 
-const SuccessResult = () => {
+const SuccessResult = ({handleGiveAnotherResponse}) => {
+
+ 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+   <Fragment>
+     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
 
-    <Result
-    status="success"
-    title="Başarılı Şekilde Cevaplar Kaydedildi "
+<Result
+status="success"
+title={<><a>Başarili Şekilde Cevaplar Kaydedildi</a><div><button className='btn btn-primary rounded-pill mt-3' onClick={handleGiveAnotherResponse} >Başka Yanıt ver</button> </div></>}
+/>
 
-   
-  />
-  </div>
+</div>
+
+   </Fragment>
   )
 }
 
