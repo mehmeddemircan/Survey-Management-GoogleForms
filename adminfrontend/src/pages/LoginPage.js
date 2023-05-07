@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Login ,register as _register} from "../redux/actions/AuthActions";
 import { Navigate, useNavigate } from "react-router-dom";
 import { message } from "antd";
+import MetaTitle from "../meta/MetaTitle";
 
 
 const LoginPage = () => {
@@ -65,6 +66,7 @@ const LoginPage = () => {
   }, [auth.authenticating,auth.error,auth.token])
   return (
     <MainLayout>
+            <MetaTitle title="Giriş Yap " name="girişyap" content="Giriş Yap" />
       <div className="container h-100 my-4">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
