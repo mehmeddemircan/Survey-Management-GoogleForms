@@ -1,10 +1,13 @@
 import { Avatar, Card, Descriptions, Image } from "antd";
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment , useEffect } from "react";
+import {  useSelector } from "react-redux";
 
-const ProfileCard = () => {
+
+const ProfileCard = ({handleDeleteProfile}) => {
 
     const getProfile = useSelector((state) => state.user.getProfile)
+
+   
 
   return (
     <Fragment>
@@ -33,6 +36,9 @@ const ProfileCard = () => {
 
           <Descriptions.Item></Descriptions.Item>
         </Descriptions>
+        <div>
+          <button className="btn btn-danger" onClick={handleDeleteProfile}>Hesabımı Sil</button>
+        </div>
       </Card>
     </Fragment>
   );

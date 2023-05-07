@@ -4,13 +4,15 @@ import MainLayout from "../components/layout/MainLayout";
 import UpdateProfileForm from "../components/form/UpdateProfileForm";
 import ProfileCard from "../components/card/ProfileCard";
 import { useDispatch, useSelector } from "react-redux";
-import { GetProfile } from "../redux/actions/UserActions";
+import { DeleteUser, GetProfile, GetSurveyFavorites } from "../redux/actions/UserActions";
 import LoadingSpinner from "../components/spinner/LoadingSpinner";
 import { message } from "antd";
 import { UPDATE_PROFILE_RESET } from "../redux/constants/UserConstants";
 import MetaTitle from "../meta/MetaTitle";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../redux/actions/AuthActions";
 const ProfilePage = () => {
   const getProfile = useSelector((state) => state.user.getProfile);
   const updateProfile = useSelector((state) => state.user.updateProfile);
@@ -33,6 +35,25 @@ const ProfilePage = () => {
             dispatch({type : UPDATE_PROFILE_RESET})
         }
   }, [dispatch,updateProfile.success]);
+
+  
+
+  const navigate = useNavigate()
+
+  const deleteUpdateUser = useSelector((state) => state.user.deleteUpdateUser)
+
+  const handleDeleteProfile = () => {
+
+    dispatch(DeleteUser(auth.user._id))
+  }
+
+  useEffect(() => {
+      if (deleteUpdateUser.isDeleted) {
+          dispatch(logout())
+          message.success('Hesabınız başarıyla silinmiştir !')
+          navigate('/login',{replace : true })
+      }
+  }, [dispatch,deleteUpdateUser.isDeleted,navigate])
 
   useEffect(() => {
     setFirstname(auth.user.firstname)
@@ -124,7 +145,7 @@ const ProfilePage = () => {
      setImageLength={setImageLength}
    />
  </div>
- <ProfileCard />
+ <ProfileCard handleDeleteProfile={handleDeleteProfile}/>
 </div>
 )
      
