@@ -1,13 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MainLayout from '../components/layout/MainLayout'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import MetaTitle from '../meta/MetaTitle'
+import { ResetPassword } from '../redux/actions/AuthActions'
+import { message } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ResetPasswordPage = () => {
-
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
     const navigate = useNavigate()
+    const {token} = useParams()
+
+    const dispatch = useDispatch()
+
+    const forgotResetPassword = useSelector((state) => state.forgotResetPassword)
+  
+    const handleResetPassword = (e) => {
+      e.preventDefault()
+  
+  
+        dispatch(ResetPassword(token,{password,confirmPassword}))
+      
+       
+    }
+  
+    useEffect(() => {
+      if (forgotResetPassword.resetSuccess) {
+          message.success(forgotResetPassword.message)
+          navigate('/login',{replace : true })
+      }
+      if (!forgotResetPassword.resetSuccess) {
+        message.error(forgotResetPassword.error)
+      }
+    }, [forgotResetPassword.resetSuccess])
+
 
   return (
     <MainLayout>
+        <MetaTitle title="Akınsoft Şifre Yenile" name="şifreyenile" content="şifreyenile" />
          <div className="container h-100 my-4">
       <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="col-lg-12 col-xl-11">
@@ -33,8 +64,8 @@ const ResetPasswordPage = () => {
                               id="form3Example4c"
                               className="form-control"
                               placeholder="Şifrenizi giriniz"
-                            //   value={veri.password}
-                            //   onChange={(e) => setVeri({...veri, password: e.target.value})}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
                             />
                           </div>
                         </div>
@@ -46,8 +77,8 @@ const ResetPasswordPage = () => {
                               id="form3Example4c"
                               className="form-control"
                               placeholder="Şifrenizi tekrar giriniz"
-                            //   value={veri.password}
-                            //   onChange={(e) => setVeri({...veri, password: e.target.value})}
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                           </div>
                         </div>
@@ -56,7 +87,7 @@ const ResetPasswordPage = () => {
                       <button
                         type="button"
                         className="btn btn-primary btn-md rounded-pill"
-                        // onClick={control}
+                        onClick={handleResetPassword}
                       >
                         Onayla
                       </button>
