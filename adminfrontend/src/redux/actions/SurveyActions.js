@@ -162,7 +162,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/submit`,response
+        `https://akinsoftanketapi.onrender.com/api/submit`,response
       );
   
       dispatch({
@@ -184,7 +184,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/send-survey`,emailData
+        `https://akinsoftanketapi.onrender.com/api/send-survey`,emailData
       );
   
       dispatch({
