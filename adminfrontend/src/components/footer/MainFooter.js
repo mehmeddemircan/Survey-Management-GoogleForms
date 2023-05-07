@@ -25,107 +25,116 @@ const MainFooter = () => {
         <Container>
           <Row>
             <FooterCol>
-              <h4>ABOUT</h4>
+              <h4>İNSAN KAYNAKLARI</h4>
               <Ul>
                 <li>
-                  <a href="#">How Airbnb works</a>
+                  <a href="#">İş Başvuru</a>
                 </li>
                 <li>
-                  <a href="#">Newsroom</a>
+                  <a href="#">Staj Başvuru</a>
                 </li>
                 <li>
-                  <a href="#">Investors</a>
+                  <a href="#">Staj Uygulaması</a>
                 </li>
                 <li>
-                  <a href="#">Airbnb Plus</a>
+                  <a href="#">Burs Başvurusu</a>
                 </li>
                 <li>
-                  <a href="#">Airbnb Luxe</a>
+                  <a href="#">Çalışma Ortamlarımız</a>
                 </li>
                 <li>
-                  <a href="#">HotelTonight</a>
+                  <a href="#">Departmanlar</a>
                 </li>
                 <li>
-                  <a href="#">Airbnb for Work</a>
+                  <a href="#">Statüler</a>
                 </li>
               </Ul>
             </FooterCol>
             <FooterCol>
-              <h4>COMMUNITY</h4>
+              <h4>İLETİŞİM</h4>
               <Ul>
                 <li>
-                  <a href="#">Diversity & Belonging</a>
+                  <a href="#">Ücretsiz Deneyin</a>
                 </li>
                 <li>
-                  <a href="#">Against Discrimination</a>
+                  <a href="#">Robot Kirala/Satın Al</a>
                 </li>
                 <li>
-                  <a href="#">Accessibility</a>
+                  <a href="#">İstek Ve Öneri</a>
                 </li>
                 <li>
-                  <a href="#">Airbnb Associates</a>
+                  <a href="#">Etkinlik Daveti</a>
                 </li>
                 <li>
-                  <a href="#">Frontline Stays</a>
+                  <a href="#">Sponsor Talebi</a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="#">Guest Referrals</a>
-                </li>
+                </li> */}
 
-                <li>
+                {/* <li>
                   <a href="#">Gift cards</a>
                 </li>
 
                 <li>
                   <a href="#">Airbnb.org</a>
-                </li>
+                </li> */}
               </Ul>
             </FooterCol>
             <FooterCol>
-              <h4>HOST</h4>
+              <h4>DESTEK ASİSTANI</h4>
               <Ul>
                 <li>
-                  <a href="#">Host your home</a>
+                  <a href="#">Lisans Sistemi</a>
                 </li>
                 <li>
-                  <a href="#">Host an Online Experience</a>
+                  <a href="#">Bilgi Bankası</a>
                 </li>
                 <li>
-                  <a href="#">Host an Experience</a>
+                  <a href="#">Sıkça Sorulan Sorular</a>
                 </li>
                 <li>
-                  <a href="#">Responsible hosting</a>
+                  <a href="#">Blog</a>
                 </li>
                 <li>
-                  <a href="#">Resource Center</a>
+                  <a href="#">Video Yardım</a>
                 </li>
                 <li>
-                  <a href="#">Community Center</a>
+                  <a href="#">Gizlilik Politikası</a>
                 </li>
               </Ul>
             </FooterCol>
             <FooterCol>
-              <h4>SUPPORT</h4>
+              <h4>SEKTÖREL ÇÖZÜMLER</h4>
               <Ul>
                 <li>
-                  <a href="#">Our COVID-19 Response</a>
+                  <a href="#">Hızlı Satış</a>
                 </li>
                 <li>
-                  <a href="#">Help Center</a>
+                  <a href="#">Otel</a>
                 </li>
                 <li>
-                  <a href="#">Cancellation options</a>
+                  <a href="#">Servis</a>
                 </li>
                 <li>
-                  <a href="#">Neighborhood Support</a>
+                  <a href="#">Internet Cafe</a>
                 </li>
                 <li>
-                  <a href="#">Trust & Safety</a>
+                  <a href="#">Site Yönetimi</a>
                 </li>
               </Ul>
             </FooterCol>
             <FooterCol>
-              <h4>FOLLOW US</h4>
+               
+                <h4 className="d-inline-block">Bizi Takip Edin</h4>
+              <img
+            src="https://www.akinsoft.com.tr/logo/images/akinsoft_logo.png?3"
+            width="40"
+            height="40"
+            alt=""
+            className="ms-2"
+          />{" "}
+               
               <div
                 style={{
                   display: "flex",
@@ -187,8 +196,8 @@ const MainFooter = () => {
             <FooterBottom>
               <h5 style={{ color: "rgb(34,34,34)", fontWeight: 400 }}>
                 copyright &copy;
-                <script>document.write(new Date().getFullYear())</script>
-                Company designed by <span>Creator</span>
+                2023
+                Company designed by <span>AkınSoft</span>
               </h5>
             </FooterBottom>
           </Row>
