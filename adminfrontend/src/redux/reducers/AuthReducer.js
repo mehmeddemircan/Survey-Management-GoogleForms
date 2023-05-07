@@ -5,7 +5,10 @@ const initialState = {
   user: {
     name: "",
     email: "",
-    favorites: []
+    favorites: [],
+    avatar : {
+      url :  ""
+    }
   },
   authenticate: false,
   authenticating: false,
@@ -87,14 +90,15 @@ export const authReducer = (state = initialState, action) => {
   }
 };
 
-export const forgotResetPasswordReducer = (state = {}, action) => {
+export const forgotResetPasswordReducer = (state = { message : "" }, action) => {
     switch (action.type) {
       case FORGOT_PASSWORD_REQUEST:
       case NEW_PASSWORD_REQUEST:
         return {
           ...state,
           loading: true,
-          success : false ,
+          forgotSuccess : false ,
+
           resetSuccess : false ,
           error: null,
         };
@@ -103,7 +107,7 @@ export const forgotResetPasswordReducer = (state = {}, action) => {
         return {
           ...state,
           loading: false,
-          success : true ,
+          forgotSuccess : true ,
           message: action.payload.message,
         };
   
@@ -120,16 +124,12 @@ export const forgotResetPasswordReducer = (state = {}, action) => {
         return {
           ...state,
           loading: false,
-          success: false ,
+          forgotSuccess: false ,
           resetSuccess : false, 
           error: action.payload.error,
         };
   
-      // case CLEAR_ERRORS:
-      //     return {
-      //         ...state,
-      //         error: null
-      //     }
+  
   
       default:
         return state;
