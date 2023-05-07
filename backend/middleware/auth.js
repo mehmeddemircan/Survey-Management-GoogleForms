@@ -15,7 +15,7 @@ exports.isAuthenticatedUser = async (req, res, next) => {
   if (!token) {
     res.status(401).json({
         success: false,
-        error: 'Login first to access this route'
+        error: 'İlk önce giriş yapmanız gerekiyor '
     })
   }
 
@@ -37,7 +37,7 @@ exports.isAuthenticatedUser = async (req, res, next) => {
   } catch (err) {
     res.status(401).json({
         success: false,
-        error: 'Login first to access this route'
+        error: 'İlk önce giriş yapmanız gerekiyor'
     })
   }
 };
