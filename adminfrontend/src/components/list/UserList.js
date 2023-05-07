@@ -3,6 +3,8 @@ import React, { Fragment } from 'react'
 
 import UserItem from '../listItem.js/UserItem'
 import { useSelector } from 'react-redux'
+import LoadingSpinner from '../spinner/LoadingSpinner'
+import EmptyComponent from '../empty/EmptyComponent'
 
 
 const UserList = () => {
@@ -13,11 +15,13 @@ const UserList = () => {
     <Fragment>
         
 
-        <List className='my-4' itemLayout="horizontal">
+        {getAllUser.loading ? <LoadingSpinner /> : getAllUser.users.length === 0 ? <EmptyComponent /> :   (
+          <List className='my-4' itemLayout="horizontal">
           {getAllUser.users.map((user) => (
             <UserItem key={user._id} user={user} />
           ))}
         </List>
+        )}
    
     </Fragment>
   )
