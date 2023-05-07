@@ -45,7 +45,7 @@ const SurveyDetailsPage = () => {
             <>
              <SurveyCard />
       {getAllQuestion.loading ? (
-        <h2>hello</h2>
+        <LoadingSpinner />
       ) : (
         getAllQuestion.data.questions.map((question) => (
           <QuestionCard
