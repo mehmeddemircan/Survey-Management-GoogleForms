@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Card, Input, Radio, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { useSelector } from "react-redux";
 const QuestionPreviewCard = ({ question, responses, setResponses }) => {
   const onChange = (e) => {
     setResponses({
@@ -8,6 +9,15 @@ const QuestionPreviewCard = ({ question, responses, setResponses }) => {
       [question._id]: e.target.value,
     });
   };
+  const submitSurvey = useSelector((state) => state.survey.submitSurvey)
+  
+  useEffect(() => {
+    if (!submitSurvey.success) {
+      setResponses({
+        [question._id]: "",
+      })
+    }
+  }, [submitSurvey.success])
 
   return (
     <Fragment>
