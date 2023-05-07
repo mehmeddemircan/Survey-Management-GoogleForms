@@ -114,7 +114,7 @@ exports.getSurveyQuestions = catchAsyncErrors(async (req, res) => {
       "questionType questionText options isRequired responses"
     ); // Use Mongoose's findById method to find the survey by its ID, and populate the 'questions' field with the associated questions
     if (!survey) {
-      return res.status(404).json({ message: "Survey not found" });
+      return res.status(404).json({ message: "Anket bulunamadı !" });
     }
     const questions = survey.questions; // Access the questions array from the retrieved survey object
     return res.status(200).json({ questions });
