@@ -4,10 +4,11 @@ const sendEmail = require("../utils/sendEmail");
 const sendToken = require("../utils/sendToken");
 const crypto = require("crypto");
 
+// kayıt olma işlemi
 exports.register = catchAsyncErrors(async (req, res, next) => {
   const { firstname, lastname, email, password } = req.body;
 
-  // Checks if email and password is entered by user
+  // isim , soyisim , email ve şifre girilip girilmediğini kontrol et
   if (!firstname || !lastname || !email || !password) {
     res.status(400).json({
       success: false,
@@ -16,28 +17,29 @@ exports.register = catchAsyncErrors(async (req, res, next) => {
   }
 
   const _user = await User.findOne({ email });
-
+  // email kontrolu
   if (_user) {
     res.status(400).json({
       success: false,
       error: "Bu Email zaten kullanılmakta Lütfen başka email giriniz ",
     });
   }
-
+  // kullanici oluşturma
   const user = await User.create({
     firstname,
     lastname,
     email,
     password,
   });
-
+  // token oluşturma 
   sendToken(user, 201, res, "Başarılı şekilde hesap oluşturuldu ");
 });
 
+// giriş yapma controller
 exports.login = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Checks if email and password is entered by user
+    // email ve şifreyi null olup olmadıgını kontrol et
   if (!email || !password) {
     res.status(400).json({
       success: false,
@@ -45,7 +47,7 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
     });
   }
 
-  // Finding user in database
+  // kullanici bulma işlemi 
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
@@ -55,7 +57,7 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
     });
   }
 
-  // Check if password is correct or not
+  // şifreyi doğru olup olmadığını kontrol etme işlemi 
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
@@ -64,10 +66,11 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
       error: "Geçersiz şifre",
     });
   }
-
+  // token oluşturma ve cevap gönderme 
   sendToken(user, 201, res, "Başarılı Şekilde hesaba girildi ");
 });
 
+// şifremi unuttum işlemi 
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const { email } = req.body;
 
@@ -80,12 +83,15 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         error: "Email Bulunamadı tekrar deneyiniz lütfen",
       });
     }
+
+    // resetToken oluşturma
     const resetToken = user.getResetPasswordToken();
 
     await user.save();
-
+    // email link
     const resetUrl = `https://akinsoftanket-admin.onrender.com/password/reset/${resetToken}`;
 
+    // email message
     const message = `
           <h1>Sifre yenilemek için istek attınız </h1>
           <p>Merhaba ${user.email}</p>
@@ -95,6 +101,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
           `;
 
     try {
+      // email gönderme işlemi 
       await sendEmail({
         to: user.email,
         subject: "Şifre Yenileme isteği",
@@ -118,6 +125,10 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     next(error);
   }
 });
+
+
+// şifre yenileme 
+
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
   const resetPasswordToken = crypto
     .createHash("sha256")

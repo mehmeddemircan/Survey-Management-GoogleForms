@@ -1,72 +1,70 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { Login ,register as _register} from "../redux/actions/AuthActions";
+import { Login, register as _register } from "../redux/actions/AuthActions";
 import { Navigate, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import MetaTitle from "../meta/MetaTitle";
 
-
 const LoginPage = () => {
   const [register, setRegister] = useState(false);
 
-  const [firstname, setFirstname] = useState("")
-  const [lastname, setLastname] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // kayıt ol , giriş yap kısımlarını toggle şeklinde geçis yapma 
   const handleToggleAuthButton = () => {
     setRegister((prev) => !prev);
   };
 
-  const auth = useSelector((state) => state.auth)
+  const auth = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const userSignUp = () => {
-    const user = {firstname , lastname,email,password}
+    const user = { firstname, lastname, email, password };
 
-    dispatch(_register(user))
-    
-  }
-
+    dispatch(_register(user));
+  };
+  // authentication işlemi 
   const userLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (register) {
-        userSignUp()
-    }else{
-        dispatch(Login({email,password}))
+      userSignUp();
+    } else {
+      dispatch(Login({ email, password }));
     }
-  } 
-
+  };
+  // regiter true ise inputları temizle
   useEffect(() => {
     if (register) {
-        setFirstname("")
-        setLastname("")
-        setEmail("")
-        setPassword("")
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
     }
-  }, [register])
-
+  }, [register]);
+  // başarılı şekilde giriş yaparsa anasayfaya yönlendir
   useEffect(() => {
     if (auth.authenticate) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     }
-   
   }, [auth.authenticate, navigate]);
+  // authentication olurken hata mesajlarını göster
   useEffect(() => {
-    if (!auth.authenticating && auth.error !== null && auth.token === null ) {
+    if (!auth.authenticating && auth.error !== null && auth.token === null) {
       if (auth.error) {
         message.error(auth.error);
       }
     }
-  }, [auth.authenticating,auth.error,auth.token])
+  }, [auth.authenticating, auth.error, auth.token]);
   return (
     <MainLayout>
-            <MetaTitle title="Giriş Yap " name="girişyap" content="Giriş Yap" />
+      <MetaTitle title="Giriş Yap " name="girişyap" content="Giriş Yap" />
       <div className="container h-100 my-4">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
@@ -101,8 +99,7 @@ const LoginPage = () => {
                                 placeholder="Adınızı giriniz"
                                 value={firstname}
                                 onChange={(e) => setFirstname(e.target.value)}
-                                //   value={data.name}
-                                //   onChange={(e) => setData({...data, name: e.target.value})}
+                            
                               />
                             </div>
                           </div>
@@ -116,8 +113,7 @@ const LoginPage = () => {
                                 placeholder="Soyadınızı giriniz"
                                 value={lastname}
                                 onChange={(e) => setLastname(e.target.value)}
-                                // value={data.name}
-                                // onChange={(e) => setData({...data, name: e.target.value})}
+                          
                               />
                             </div>
                           </div>
@@ -133,8 +129,7 @@ const LoginPage = () => {
                             placeholder="name@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            //   value={veri.email}
-                            //   onChange={(e) => setVeri({...veri, email: e.target.value})}
+                
                           />
                         </div>
                       </div>
@@ -148,8 +143,7 @@ const LoginPage = () => {
                             placeholder="Şifrenizi giriniz"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            //   value={veri.password}
-                            //   onChange={(e) => setVeri({...veri, password: e.target.value})}
+                       
                           />
                         </div>
                       </div>

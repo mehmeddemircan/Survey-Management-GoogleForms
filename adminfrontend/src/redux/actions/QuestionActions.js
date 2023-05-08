@@ -14,7 +14,7 @@ import {
   UPDATE_QUESTION_REQUEST,
   UPDATE_QUESTION_SUCCESS,
 } from "../constants/QuestionConstants";
-
+// anket sorularını getirme işlemi 
 export const AllQuestionOfSurvey = (surveyId) => async (dispatch) => {
   try {
     dispatch({
@@ -36,7 +36,7 @@ export const AllQuestionOfSurvey = (surveyId) => async (dispatch) => {
     });
   }
 };
-
+// soruyu oluşturma işlemi 
 export const CreateQuestion = (question) => async (dispatch) => {
   try {
     dispatch({
@@ -59,7 +59,7 @@ export const CreateQuestion = (question) => async (dispatch) => {
     });
   }
 };
-
+// soru silme işlemi 
 export const DeleteQuestion = (surveyId, questionId) => async (dispatch) => {
   try {
     dispatch({
@@ -82,7 +82,7 @@ export const DeleteQuestion = (surveyId, questionId) => async (dispatch) => {
   }
 };
 
-
+// soruyu güncelleme işlemi 
 export const UpdateQuestion = (questionId, question) => async (dispatch) => {
   try {
     dispatch({

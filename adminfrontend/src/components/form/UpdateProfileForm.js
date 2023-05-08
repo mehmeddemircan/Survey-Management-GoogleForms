@@ -1,41 +1,44 @@
-import { Button, Card, Form, Input ,Upload} from 'antd'
-import React from 'react'
+import { Button, Card, Form, Input, Upload } from "antd";
+import React from "react";
 import ImgCrop from "antd-img-crop";
 import { CameraFilled } from "@ant-design/icons";
-import { useDispatch } from 'react-redux';
-import { UpdateProfile } from '../../redux/actions/UserActions';
-const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,setEmail, avatar, setAvatar, imageLength, setImageLength,uploadProps,onPreview}) => {
+import { useDispatch } from "react-redux";
+import { UpdateProfile } from "../../redux/actions/UserActions";
+const UpdateProfileForm = ({
+  firstname,
+  setFirstname,
+  lastname,
+  setLastname,
+  email,
+  setEmail,
+  avatar,
+  setAvatar,
+  imageLength,
+  setImageLength,
+  uploadProps,
+  onPreview,
+}) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
-
-    const handleUpdateProfile = () => {
-        dispatch(UpdateProfile({firstname,lastname,email,avatar}))
-    }
+  // kullanici profili güncelleme işlemi 
+  const handleUpdateProfile = () => {
+    dispatch(UpdateProfile({ firstname, lastname, email, avatar }));
+  };
 
   return (
     <Card>
-       <Form
+      <Form
         className="mx-auto"
         style={{
           maxWidth: 600,
         }}
         layout="vertical"
-        
       >
         <Form.Item
           name="firstname"
           label="İsim"
           className="mt-3"
-          // rules={[
-          //   {
-          //     type: "name",
-          //     message: "The input is not valid E-mail!",
-          //   },
-          //   {
-          //     required: true,
-          //     message: "Please input your E-mail!",
-          //   },
-          // ]}
+       
         >
           <Input
             type="text"
@@ -49,16 +52,7 @@ const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,se
           name="lastname"
           label="Soyisim"
           className="mt-3"
-          // rules={[
-          //   {
-          //     type: "name",
-          //     message: "The input is not valid E-mail!",
-          //   },
-          //   {
-          //     required: true,
-          //     message: "Please input your E-mail!",
-          //   },
-          // ]}
+       
         >
           <Input
             type="text"
@@ -72,16 +66,7 @@ const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,se
           name="email"
           label="Email"
           className="mt-3"
-          // rules={[
-          //   {
-          //     type: "name",
-          //     message: "The input is not valid E-mail!",
-          //   },
-          //   {
-          //     required: true,
-          //     message: "Please input your E-mail!",
-          //   },
-          // ]}
+        
         >
           <Input
             type="text"
@@ -91,9 +76,8 @@ const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,se
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
-    
- 
-    <Form.Item name="images" label="Profil Fotoğrafı">
+
+        <Form.Item name="images" label="Profil Fotoğrafı">
           <ImgCrop rotationSlider>
             <Upload
               {...uploadProps}
@@ -106,14 +90,15 @@ const UpdateProfileForm = ({firstname,setFirstname,lastname,setLastname,email,se
               listType="picture-card"
             >
               {imageLength === 0 && <CameraFilled style={{ fontSize: 30 }} />}
-       
             </Upload>
           </ImgCrop>
         </Form.Item>
-        <Button type="primary" onClick={handleUpdateProfile} >Onayla</Button>
-        </Form>
+        <Button type="primary" onClick={handleUpdateProfile}>
+          Onayla
+        </Button>
+      </Form>
     </Card>
-  )
-}
+  );
+};
 
-export default UpdateProfileForm
+export default UpdateProfileForm;

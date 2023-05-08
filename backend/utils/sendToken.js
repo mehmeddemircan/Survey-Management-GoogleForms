@@ -1,8 +1,8 @@
-// Create and send token  and save in the cookie
 
 
+// token oluştur ve cookie kaydet
 const sendToken = (user, statusCode, res , message ) => {
-    // Create jwt token
+    // Jwt token oluşturma 
     const token = user.getJwtToken();
   
     res.status(statusCode).json({

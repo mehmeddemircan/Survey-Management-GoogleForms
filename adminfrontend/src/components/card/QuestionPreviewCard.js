@@ -3,6 +3,8 @@ import { Card, Input, Radio, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useSelector } from "react-redux";
 const QuestionPreviewCard = ({ question, responses, setResponses }) => {
+
+  // her sorunun id sine göre input değerlerini tutar
   const onChange = (e) => {
     setResponses({
       ...responses,
@@ -10,7 +12,7 @@ const QuestionPreviewCard = ({ question, responses, setResponses }) => {
     });
   };
   const submitSurvey = useSelector((state) => state.survey.submitSurvey)
-  
+  // başarılı şekilde anket cevaplandiysa inputları sıfırlar
   useEffect(() => {
     if (!submitSurvey.success) {
       setResponses({

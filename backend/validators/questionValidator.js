@@ -8,18 +8,10 @@ exports.validateQuestionRequest = [
       }
       return true;
     }),
-  check('choices')
+  check('options')
     .isArray({ min: 1 })
-    .withMessage('At least one choice must be added')
-    // check('questions')
-    //   .notEmpty()
-    //   .withMessage('At least one question is required')
-    //   .isArray({ min: 1 })
-    //   .withMessage('Questions must be an array with at least one item'),
-    // check('responses')
-    //   .optional()
-    //   .isArray()
-    //   .withMessage('Responses must be an array'),
+    .withMessage('En az bir seçenek eklenmelidir')
+   
   ];
   
 exports.isRequestValidated = (req, res, next) => {

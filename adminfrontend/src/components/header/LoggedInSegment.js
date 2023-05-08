@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 const LoggedInSegment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // çıkış yapma işlemi 
   const LogoutHandler = () => {
     dispatch(logout());
     navigate("/login", { replace: true });
@@ -16,6 +17,7 @@ const LoggedInSegment = () => {
   const auth = useSelector((state) => state.auth);
 
   const getUserFavorites = useSelector((state) => state.user.getUserFavorites);
+  // çoklu dil 
   const {t} = useTranslation()
   return (
     <Fragment>

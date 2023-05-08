@@ -15,11 +15,9 @@ const AddEditSurveyForm = ({
   setImageLength,
   uploadProps,
   onPreview,
-  onRemove,
 }) => {
   return (
     <Fragment>
-  
       <Form
         className="mx-auto"
         style={{
@@ -46,14 +44,9 @@ const AddEditSurveyForm = ({
             onChange={(e) => setTitle(e.target.value)}
           />
         </Form.Item>
-        <Form.Item
-          name="description"
-          label="Açıklama"
-          className="mt-3"
-         
-        >
-         <TextArea
-            showCount 
+        <Form.Item name="description" label="Açıklama" className="mt-3">
+          <TextArea
+            showCount
             rows={5}
             placeholder="Açıklama yaz.."
             value={description}

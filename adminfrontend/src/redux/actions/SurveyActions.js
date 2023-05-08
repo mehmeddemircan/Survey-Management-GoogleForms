@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CREATE_SURVEY_FAIL, CREATE_SURVEY_REQUEST, CREATE_SURVEY_SUCCESS, DELETE_SURVEY_FAIL, DELETE_SURVEY_REQUEST, DELETE_SURVEY_SUCCESS, GET_ALL_SURVEY_FAIL, GET_ALL_SURVEY_REQUEST, GET_ALL_SURVEY_SUCCESS, GET_SINGLE_SURVEY_FAIL, GET_SINGLE_SURVEY_PREVIEW_FAIL, GET_SINGLE_SURVEY_PREVIEW_REQUEST, GET_SINGLE_SURVEY_PREVIEW_SUCCESS, GET_SINGLE_SURVEY_REQUEST, GET_SINGLE_SURVEY_SUCCESS, SEARCH_SURVEYS_FAIL, SEARCH_SURVEYS_REQUEST, SEARCH_SURVEYS_SUCCESS, SEND_SURVEY_TO_EMAIL_FAIL, SEND_SURVEY_TO_EMAIL_REQUEST, SEND_SURVEY_TO_EMAIL_SUCCESS, SUBMIT_SURVEY_FAIL, SUBMIT_SURVEY_REQUEST, SUBMIT_SURVEY_SUCCESS, UPDATE_SURVEY_FAIL, UPDATE_SURVEY_REQUEST, UPDATE_SURVEY_SUCCESS } from "../constants/SurveyConstants";
 
-
+// anketleri sayfalama şeklinde getir
 export const AllSurvey = (limit,page) => async (dispatch) => {
     try {
       dispatch({
@@ -21,7 +21,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
     }
   };
-
+// anket oluştur
   export const CreateSurvey = (survey) => async (dispatch) => {
     try {
       dispatch({
@@ -42,7 +42,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
     }
   };
 
-
+// anket sil 
   export const DeleteSurvey = (surveyId) => async (dispatch) => {
     try {
       dispatch({
@@ -62,7 +62,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
     }
   };
-
+// anket güncelle
   export const UpdateSurvey = (surveyId,survey) => async (dispatch) => {
     try {
       dispatch({
@@ -83,7 +83,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
     }
   };
 
-
+// anket arama yaparak getir 
   export const SearchSurvey = (title) => async (dispatch) => {
     try {
       dispatch({
@@ -106,7 +106,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
     }
   };
   
-
+// tek bir anket getir 
   export const GetSingleSurvey = (surveyId) => async (dispatch) => {
     try {
       dispatch({
@@ -131,7 +131,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
 
 
   
-
+// anket önizlemesini getir 
   export const GetSingleSurveyPreview = (surveyId) => async (dispatch) => {
     try {
       dispatch({
@@ -154,7 +154,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
     }
   };
 
-
+// anket bilgilerini gönder ve yanıtları kaydetme 
   export const SubmitSurveyForm = (response) => async (dispatch) => {
     try {
       dispatch({
@@ -176,7 +176,7 @@ export const AllSurvey = (limit,page) => async (dispatch) => {
       });
     }
   };
-
+// kullaniciya anketi mail yoluyla iletme işlemi 
   export const SendSurveyToEmail = (emailData) => async (dispatch) => {
     try {
       dispatch({

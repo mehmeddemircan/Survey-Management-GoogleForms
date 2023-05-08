@@ -1,6 +1,7 @@
 import { Breadcrumb } from 'antd'
 import React from 'react'
 
+// hangi sayfada  olduğunu gösteren breadcrumb
 const InfoBreadcrumb = ({separator = '/' , items =[]}) => {
   return (
     <Breadcrumb separator={separator} >

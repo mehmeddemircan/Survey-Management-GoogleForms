@@ -11,12 +11,14 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
 
+// frontend bağlanma kısmı 
 app.use(cors())
 
+//database bağlanma 
 connectDB();
 
 
-
+// json verilerini gönderme işlemi 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
@@ -28,7 +30,7 @@ app.get('/', (req, res) => {
 
 
 
-// // autoloading routes
+// autoloading routes
 fs.readdirSync("./routes").map((r) =>
   app.use("/api", require(`./routes/${r}`))
 );

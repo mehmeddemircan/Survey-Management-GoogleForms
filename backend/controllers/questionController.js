@@ -2,6 +2,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Question = require("../models/Question");
 const Survey = require("../models/Survey");
 
+// soru oluşturma controller
 exports.createQuestion = catchAsyncErrors(async (req, res) => {
   const { surveyId, questionType, questionText, options, isRequired } =
     req.body;
@@ -17,7 +18,7 @@ exports.createQuestion = catchAsyncErrors(async (req, res) => {
 
     await newQuestion.save();
     const survey = await Survey.findById(surveyId);
-    // Update the questions array in the corresponding survey
+    // anketin sorularına soru id sini ekleme 
     survey.questions.push(newQuestion);
     await survey.save();
 
@@ -30,25 +31,26 @@ exports.createQuestion = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// sorunun  gerekliliğini değiştirme
 exports.toggleQuestionIsRequired = catchAsyncErrors(async (req, res) => {
-  const { questionId } = req.params; // Assuming you have questionId in request params
+  const { questionId } = req.params; 
 
   try {
-    // Find the question by ID
+   
     const question = await Question.findById(questionId);
 
-    // Check if the question exists
+  
     if (!question) {
       return res.status(404).json({ error: "Soru bulunamadı" });
     }
 
-    // Toggle the isRequired field of the question
+  
     question.isRequired = !question.isRequired;
 
-    // Save the updated question
+ 
     await question.save();
 
-    // Return the updated question
+  
     return res.status(200).json({
       question,
       message: "Sorunun zorunlu alan gerekliliği güncellendi",
@@ -59,70 +61,73 @@ exports.toggleQuestionIsRequired = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// soru silme işlemi
 exports.deleteQuestion = catchAsyncErrors(async (req, res) => {
-  const { surveyId, questionId } = req.params; // Assuming you have surveyId and questionId in request params
+  const { surveyId, questionId } = req.params;
 
   try {
-    // Find the question by ID
+
     const question = await Question.findById(questionId);
 
-    // Check if the question exists
+  
     if (!question) {
       return res.status(404).json({ error: "Soru bulunamadı" });
     }
 
-    // Find the corresponding survey by ID
+
     const survey = await Survey.findById(surveyId);
 
-    // Check if the survey exists
+
     if (!survey) {
       return res.status(404).json({ error: "Anket bulunamadı" });
     }
 
-    // Find the index of the question in the questions array in the survey
+    // anket sorularındaki indeksi bulma 
     const questionIndex = survey.questions.findIndex(
       (question) => question.toString() === questionId
     );
 
-    // Check if the question exists in the survey
+
     if (questionIndex === -1) {
       return res
         .status(404)
         .json({ error: "Ankette istediğiniz soru bulunamadı" });
     }
 
-    // Remove the question from the questions array in the survey
+
     survey.questions.splice(questionIndex, 1);
 
-    // Save the updated survey
+    //anketi güncelle
     await survey.save();
 
-    // Delete the question
+    //Soruyu id ye göre sil 
     await Question.findByIdAndDelete(questionId);
 
-    // Return success message
+    // başarılı mesajı
     return res.status(200).json({ message: "Soru başarıyla silindi" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "İç sunucu hatası" });
   }
 });
+// anketin sorularını getirme
 exports.getSurveyQuestions = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.surveyId).populate(
       "questions",
       "questionType questionText options isRequired responses"
-    ); // Use Mongoose's findById method to find the survey by its ID, and populate the 'questions' field with the associated questions
+    ); 
     if (!survey) {
       return res.status(404).json({ message: "Anket bulunamadı !" });
     }
-    const questions = survey.questions; // Access the questions array from the retrieved survey object
+    const questions = survey.questions; 
     return res.status(200).json({ questions });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+// soruyu güncelle
 exports.updateQuestion = catchAsyncErrors(async (req, res) => {
   try {
     await Question.findByIdAndUpdate(
@@ -137,6 +142,7 @@ exports.updateQuestion = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// tek bir sorunun detaylarını getirme 
 exports.getSingleQuestion = catchAsyncErrors(async(req,res) => {
   try {
 
@@ -150,3 +156,4 @@ exports.getSingleQuestion = catchAsyncErrors(async(req,res) => {
     res.status(500).json({error : error.message})
   }
 })
+

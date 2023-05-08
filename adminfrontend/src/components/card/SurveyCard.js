@@ -17,6 +17,8 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  // anketi silme işlemi 
   const handleDeleteSurvey = (surveyId) => {
    
       dispatch(DeleteSurvey(surveyId));
@@ -28,6 +30,7 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
   const auth = useSelector((state) => state.auth);
   const getUserFavorites = useSelector((state) => state.user.getUserFavorites);
 
+  // toggle şeklinde anketi favorilere koyma ve çıkarma işlemi 
   const handleToggleFavorite = (surveyId) => {
     const isSurveyInFavorites = getUserFavorites.data.favorites.some(
       (survey) => survey._id === surveyId
@@ -45,11 +48,11 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
   );
 
   const [showEditSurveyModal, setShowEditSurveyModal] = useState(false);
-
+    // anketi güncelle modalı aç 
   const handleShowEditSurveyModal = () => {
     setShowEditSurveyModal(true);
   };
-
+  // anketi güncelle modal kapat
   const handleCloseEditSurveyModal = () => {
     setShowEditSurveyModal(false);
   };
@@ -95,6 +98,7 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
           />
 
           <InfoTooltip text="Anketi Sil">
+              {/* anketi silmek için onaylama kısmı  */}
             <InfoPopconfirm
               title="Anketi Silmek"
               description={`${survey.title} silmek istediğiniz den emin misiniz ? `}
@@ -104,7 +108,7 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
               <button
                 className="btn btn-light btn-sm ms-2"
                 href="#"
-                // onClick={() => handleDeleteSurvey(survey._id)}
+             
               >
                 <i class="fa-solid fa-x"></i>
               </button>
@@ -116,11 +120,13 @@ const SurveyCard = ({ survey, isDetailsCard ,isPreviewCard}) => {
    <div class="row">
   <div class="col-md-8">
     <div class="d-flex flex-row justify-content-between">
+      {/* anket detay bilgileri */}
       <SurveyDescriptions isPreviewCard={isPreviewCard} survey={survey} />
     </div>
   </div>
   <div class="col-md-4">
     <div class="d-flex justify-content-center">
+      {/* anket resim  */}
       {survey.image ? (
         <Image
           class="img-fluid"

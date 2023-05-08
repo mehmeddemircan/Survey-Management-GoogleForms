@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
+// private route, kullanicinin giriş yapıp yapmadıgını kontrol eden middleware ( authentication )
 exports.isAuthenticatedUser = async (req, res, next) => {
   let token;
 
@@ -42,6 +43,7 @@ exports.isAuthenticatedUser = async (req, res, next) => {
   }
 };
 
+// kullanicin rolüne göre izin veren kısım (authrozation)
 exports.authorizeRoles = (...roles) => {
     return (req, res, next) => {
   

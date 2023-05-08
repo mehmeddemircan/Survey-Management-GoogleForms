@@ -15,6 +15,7 @@ import {
   REGISTER_REQUEST,
 } from "../constants/AuthConstants";
 
+// giriş yapma 
 export const Login = (user) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
@@ -47,7 +48,7 @@ export const Login = (user) => async (dispatch) => {
     });
   }
 };
-
+// kayıt olma 
 export const register = (user) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
@@ -71,7 +72,7 @@ export const register = (user) => async (dispatch) => {
         },
       });
 
-      //   fail
+   
     }
    
 
@@ -83,7 +84,7 @@ export const register = (user) => async (dispatch) => {
   }
 };
 
-// it provides when you refres the page , it kept you logged in to website
+// sayfa yenilendiğinde dahi kullanıcı girişlerini sifırlamayı önler
 export const isUserLoggedIn = () => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");

@@ -19,6 +19,7 @@ const FavoritesPage = () => {
   );
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  // favori anketleri getir , favoriye eklendiyse veya çıkarildiysa bu useffecti tetikle
   useEffect(() => {
     dispatch(GetSurveyFavorites(auth.user._id));
     if (addRemoveFavorite.isAdded) {
@@ -32,7 +33,11 @@ const FavoritesPage = () => {
   }, [dispatch, auth, addRemoveFavorite.isAdded, addRemoveFavorite.isRemoved]);
   return (
     <MainLayout>
-            <MetaTitle title="Akınsoft Favori Anketlerim" name="favorilerim" content="Akınsoft favorilerim" />
+      <MetaTitle
+        title="Akınsoft Favori Anketlerim"
+        name="favorilerim"
+        content="Akınsoft favorilerim"
+      />
       {getUserFavorites.loading ? (
         <LoadingSpinner />
       ) : getUserFavorites.data.favorites.length === 0 ? (

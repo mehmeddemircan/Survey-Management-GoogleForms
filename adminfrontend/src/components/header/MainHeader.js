@@ -11,16 +11,16 @@ const MainHeader = () => {
   const auth = useSelector((state) => state.auth);
 
   const [showLanguageModal, setShowLanguageModal] = useState(false);
-
+  // dil modal aç 
   const handleShowLanguageModal = () => {
     setShowLanguageModal(true);
   };
-
+  // dil modal kapat
   const handleCloseLanguageModal = () => {
     setShowLanguageModal(false);
   };
 
-  const navigate = useNavigate();
+
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -28,7 +28,7 @@ const MainHeader = () => {
     setShowMenu(!showMenu);
   };
 
-// // çoklu dil erişim
+//  çoklu dil erişim
   const {t} = useTranslation()
 
   return (

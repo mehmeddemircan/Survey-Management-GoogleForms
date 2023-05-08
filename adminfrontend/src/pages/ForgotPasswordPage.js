@@ -13,10 +13,11 @@ const ForgotPasswordPage = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const forgotResetPassword = useSelector((state) => state.forgotResetPassword)
+    // şifre unuttum işlemi , mail atma 
     const handleForgotPassword = () => {
         dispatch(ForgotPassword({email}))
     }
-
+    // başarılı şekilde olursa , message verme , email inputunu temizleme 
     useEffect(() => {
         if (forgotResetPassword.forgotSuccess) {
           message.success(forgotResetPassword.message)

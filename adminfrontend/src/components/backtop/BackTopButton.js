@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import {  Button, BackTop } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
 
+// sayfayı  yukariya getirme butonu 
 const BackTopButton = () => {
   const backtopStyle = {
     height: 40,

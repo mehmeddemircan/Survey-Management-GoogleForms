@@ -6,6 +6,8 @@ import { SendSurveyToEmail } from "../../redux/actions/SurveyActions";
 const SendMailCard = ({form,surveyId,email,setEmail}) => {
 
   const dispatch = useDispatch()
+
+  // anketi mail yoluyla gönderme işlemi 
   const handleSendSurveyToEmail = () => {
     dispatch(SendSurveyToEmail({surveyId,email}))
   

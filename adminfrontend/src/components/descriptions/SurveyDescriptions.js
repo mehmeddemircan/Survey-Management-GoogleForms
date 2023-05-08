@@ -4,7 +4,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 const SurveyDescriptions = ({isPreviewCard, survey }) => {
   const getSingleSurvey = useSelector((state) => state.survey.getSingleSurvey);
-  const getAllSurvey = useSelector((state) => state.survey.getAllSurvey);
+
   return (
     <Descriptions className="d-flex flex-column" title={isPreviewCard ? "" : "Anket Bilgileri"}>
       <Descriptions.Item

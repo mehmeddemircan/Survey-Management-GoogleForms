@@ -22,8 +22,8 @@ import SurveyPreviewPage from "./pages/SurveyPreviewPage";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  // When we fresh the page if you are in logged in  stay logged in
-
+ 
+ // When we fresh the page if you are in logged in  stay logged in
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());

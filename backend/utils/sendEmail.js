@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+//Sendgrid email gönderme işlemi 
 const sendEmail = (options) => {
     const transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
@@ -22,7 +23,7 @@ const sendEmail = (options) => {
     transporter.sendMail(mailOptions,function (err,info) {
         if (err) {
             console.log(err);
-            console.log("hey");
+            console.log("error");
         }else{
             console.log(info);
             console.log("success");

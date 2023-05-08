@@ -21,27 +21,23 @@ const AddEditQuestionForm = ({
   questionTypes,
   handleAddOption,
   onRequiredChange,
-  options, 
+  options,
   setOptions,
-
 }) => {
-
-
-
   return (
-  
     <Form
-    form={form}
+      form={form}
       className="mx-auto"
       style={{
         maxWidth: 600,
       }}
       layout="vertical"
-   // initialValues={{ questionText: "", questionType: "" , isRequired : false }}   
     >
-  
       <div className="d-flex justify-content-between">
-        <Form.Item name="title" label="Soru" className="mt-3" 
+        <Form.Item
+          name="title"
+          label="Soru"
+          className="mt-3"
           rules={[
             {
               required: true,
@@ -57,8 +53,11 @@ const AddEditQuestionForm = ({
             onChange={(e) => setQuestionText(e.target.value)}
           />
         </Form.Item>
-        <Form.Item name="questionType" label="Soru Tipi" className="mt-3"
-           rules={[
+        <Form.Item
+          name="questionType"
+          label="Soru Tipi"
+          className="mt-3"
+          rules={[
             {
               required: true,
               message: "Soru tipini şeçiniz lütfen !",
@@ -85,7 +84,7 @@ const AddEditQuestionForm = ({
             }
           >
             {questionTypes.map((questionType) => (
-              <Option  value={questionType} key={questionType}>
+              <Option value={questionType} key={questionType}>
                 {questionType}
               </Option>
             ))}
@@ -126,8 +125,11 @@ const AddEditQuestionForm = ({
                       <div className="d-inline-flex">
                         <Radio disabled={true} />
                         <Input
-                        
-                          value={isEditForm ? options[index] : optionsObjects[index].option}
+                          value={
+                            isEditForm
+                              ? options[index]
+                              : optionsObjects[index].option
+                          }
                           onChange={(e) =>
                             setOptionObjects(
                               optionsObjects.map((o, i) =>
@@ -152,23 +154,7 @@ const AddEditQuestionForm = ({
                     />
                   </Space>
                 ))}
-                {/* {
-                    optionsObjects.length > 1 && (
-                      <Form.Item className="d-flex justify-content-end">
-                      <Button
-                        type="primary"
-                     
-                        onClick={() => {
-                          handleSaveOptions()
-                        }}
-                        block
-                     
-                      >
-                        Seçenekleri Kaydet
-                      </Button>
-                    </Form.Item>
-                    )
-                  } */}
+
                 <Form.Item>
                   <Button
                     type="dashed"
@@ -188,10 +174,13 @@ const AddEditQuestionForm = ({
         </>
       )}
       <Form.Item name="isRequired" className="mt-3">
-      <div className="d-inline-flex">
-        <p className="me-3">Gerekli</p>
-        <RequiredSwitch isRequired={isRequired} onRequiredChange={onRequiredChange} />
-      </div>
+        <div className="d-inline-flex">
+          <p className="me-3">Gerekli</p>
+          <RequiredSwitch
+            isRequired={isRequired}
+            onRequiredChange={onRequiredChange}
+          />
+        </div>
       </Form.Item>
     </Form>
   );

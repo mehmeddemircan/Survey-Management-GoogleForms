@@ -4,7 +4,7 @@ const Question = require("../models/Question");
 const Survey = require("../models/Survey");
 const cloudinary = require("cloudinary");
 const sendEmail = require("../utils/sendEmail");
-// Create a new survey
+// yeni anket oluşturma işlemi 
 exports.createSurvey = catchAsyncErrors(async (req, res) => {
   try {
     const { title, description, questions, createdBy } = req.body;
@@ -33,16 +33,16 @@ exports.createSurvey = catchAsyncErrors(async (req, res) => {
 
 exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
   try {
-    // Get page and limit from query parameters
+    // page ve limit parametrelerini alma 
     const { page = 1, limit = 10 } = req.query;
 
-    // Calculate skip value based on page and limit
+    // her sayfa başına ,  toplam anket sayisini hesaplama
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    // Get total count of surveys
+    // toplam anket sayisi
     const totalSurveys = await Survey.countDocuments();
 
-    // Get surveys with pagination using skip and limit
+   
     const surveys = await Survey.find()
       .skip(skip)
       .limit(parseInt(limit))
@@ -55,6 +55,7 @@ exports.getAllSurvey = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// anket detaylarını getirme 
 exports.getSurveyDetails = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id)
@@ -70,6 +71,7 @@ exports.getSurveyDetails = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// anketi sil 
 exports.deleteSurvey = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);
@@ -83,6 +85,7 @@ exports.deleteSurvey = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// anketi güncelle
 exports.updateSurvey = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id);
@@ -100,6 +103,7 @@ exports.updateSurvey = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// anketleri arama yaparak getir
 exports.surveySearchQuery = async (req, res) => {
   try {
     const searchQuery = req.query.title;
@@ -115,6 +119,7 @@ exports.surveySearchQuery = async (req, res) => {
   }
 };
 
+// ankete soru ekle 
 exports.addQuestionsToSurvey = catchAsyncErrors(async (req, res) => {
   const { surveyId, questions } = req.body;
 
@@ -143,6 +148,7 @@ exports.addQuestionsToSurvey = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// anketi gönder , cevapları kaydet 
 exports.submitSurveyAnswers = catchAsyncErrors(async (req, res) => {
   try {
     const surveyId = req.body.surveyId;
@@ -175,6 +181,7 @@ exports.submitSurveyAnswers = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// Kullanici tarafında ki  anket detaylarını getir
 exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
   try {
     const survey = await Survey.findById(req.params.id)
@@ -186,6 +193,7 @@ exports.getSurveyDetailsForUser = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// Kullaniciya anketi mail yoluyla iletme işlemi 
 exports.sendSurveyToEmail = catchAsyncErrors(async (req, res, next) => {
   const { surveyId, email } = req.body;
 

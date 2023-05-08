@@ -9,6 +9,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
+// cloudinary resim yükleme
 exports.upload = catchAsyncErrors(async (req, res, next) => {
   let result = await cloudinary.uploader.upload(
     req.body.image,
@@ -24,6 +26,7 @@ exports.upload = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// cloudinary resim silme
 exports.remove = (req, res, next) => {
   let image_id = req.body.public_id;
 
@@ -38,7 +41,7 @@ exports.remove = (req, res, next) => {
   });
 };
 
-
+// cloudinary resim yükleme 
 exports.uploadImage = catchAsyncErrors(async(req,res,next)=> {
    
     let result = await cloudinary.uploader.upload(req.body.image,{

@@ -1,33 +1,35 @@
-import React, { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import AddSurveyModal from '../modal/survey/AddSurveyModal'
+import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AddSurveyModal from "../modal/survey/AddSurveyModal";
+
 
 const CreateSurveyButton = () => {
+  const [showAddSurveyModal, setShowAddSurveyModal] = useState(false);
 
-    const navigate = useNavigate()
+  // anket oluştur modal aç 
+  const handleShowAddSurveyModal = () => {
+    setShowAddSurveyModal(true);
+  };
 
-    const [showAddSurveyModal, setShowAddSurveyModal] = useState(false)
+  // anket modalı kapat
+  const handleCloseAddSurveyModal = () => {
+    setShowAddSurveyModal(false);
+  };
 
-    const handleShowAddSurveyModal =() => {
-      setShowAddSurveyModal(true)
-    }
-
-    const handleCloseAddSurveyModal = () => {
-      setShowAddSurveyModal(false)
-    }
-
-
-//  onClick={() => navigate('/create-survey',{replace : true})}
   return (
     <Fragment>
-    <button className='btn btn-primary rounded-pill mx-2' onClick={handleShowAddSurveyModal} >Anket Oluştur</button>
-    <AddSurveyModal 
-      showAddSurveyModal={showAddSurveyModal}
-      handleCloseAddSurveyModal={handleCloseAddSurveyModal}
-    />
+      <button
+        className="btn btn-primary rounded-pill mx-2"
+        onClick={handleShowAddSurveyModal}
+      >
+        Anket Oluştur
+      </button>
+      <AddSurveyModal
+        showAddSurveyModal={showAddSurveyModal}
+        handleCloseAddSurveyModal={handleCloseAddSurveyModal}
+      />
     </Fragment>
+  );
+};
 
-  )
-}
-
-export default CreateSurveyButton
+export default CreateSurveyButton;

@@ -4,20 +4,20 @@ const sendToken = require("../utils/sendToken");
 const cloudinary = require("cloudinary");
 
 
-
+// butun kullaniciları sayfa şeklinde getirme işlemi 
 exports.getAllUser = catchAsyncErrors(async(req,res) => {
  
     try {
-        // Get page and limit from query parameters
+       
         const { page = 1, limit = 10 } = req.query;
     
-        // Calculate skip value based on page and limit
+
         const skip = (parseInt(page) - 1) * parseInt(limit);
     
-        // Get total count of surveys
+   
         const totalUsers = await User.countDocuments();
     
-        // Get surveys with pagination using skip and limit
+   
         const users = await User.find().skip(skip).limit(parseInt(limit))
     
         res.status(200).json({ data: users, totalUsers });
@@ -27,6 +27,7 @@ exports.getAllUser = catchAsyncErrors(async(req,res) => {
 
 })
 
+// kullaniciyi silme veya hesabi silme 
 exports.deleteUser = catchAsyncErrors(async(req,res) => {
   try {
 
@@ -40,7 +41,7 @@ exports.deleteUser = catchAsyncErrors(async(req,res) => {
 
 
 
-// Get currently logged in user details   =>   /api/profile/me
+// Şu anki kullanicin profilini getir /api/profile/me
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
@@ -50,7 +51,7 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// update user profile private route   => /api/profile/update
+// Private route, Kullanicin önce giriş yapacak şekilde hesabi güncelleme   => /api/profile/update
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
@@ -61,9 +62,9 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     if (req.body.password) {
       user.password = req.body.password;
     }
-    // Check if an image is uploaded
+    // Fotograf oldugunu kontrol et
     if (req.body.avatar) {
-      // Upload image to cloudinary and update user avatar with the uploaded image URL and public ID
+      // resimi yükleme işlemi 
       const result = await cloudinary.uploader.upload(req.body.avatar);
       user.avatar.url = result.secure_url;
       user.avatar.public_id = result.public_id;
@@ -73,7 +74,7 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
 
     sendToken(updatedUser, 200, res, "Başarılı Şekilde profil güncellenmiştir");
   } else {
-    // return next(new ErrorHandler('User not found , not updated '))
+  
     res.status(404).json({
       success: false,
       error: "Kullanıcı bulunamadı , güncelleme olmadı ",
@@ -82,7 +83,7 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-
+// anketi kullanıcın favorilerine ekleme işlemi 
 exports.addSurveyToFavorites = catchAsyncErrors( async (req, res) => {
   const { userId, surveyId } = req.params;
 
@@ -100,6 +101,7 @@ exports.addSurveyToFavorites = catchAsyncErrors( async (req, res) => {
   }
 });
 
+// anketi kullanici favorilerinden kaldırma işlemi 
 exports.removeFromFavorites = catchAsyncErrors(async (req, res) => {
   const { userId, surveyId } = req.params;
 
@@ -117,6 +119,7 @@ exports.removeFromFavorites = catchAsyncErrors(async (req, res) => {
   }
 });
 
+// kullanicinin favorilerini getirme işlemi 
 exports.getFavoriteSurveys = catchAsyncErrors(async (req, res) => {
   const { userId } = req.params;
 

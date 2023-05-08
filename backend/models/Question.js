@@ -4,11 +4,12 @@ const { ObjectId } = mongoose;
 // Soru Modeli
 const questionSchema = new mongoose.Schema(
   {
+     // Anket referansı
     surveyId: {
       type: ObjectId,
       ref: "Survey",
       required: true,
-    }, // Anket referansı
+    },
      // Soru tipi (kısa yanıt, paragraf, çoktan seçmeli, vb.)
     questionType: { 
         type: String,
@@ -29,6 +30,7 @@ const questionSchema = new mongoose.Schema(
         type: Boolean,
         default : false 
     },
+    // string yanıt dizisi 
     responses : [
       {
         type : String

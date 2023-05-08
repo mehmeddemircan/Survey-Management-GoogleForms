@@ -3,10 +3,7 @@ import SurveyCard from "../card/SurveyCard";
 import { useDispatch, useSelector } from "react-redux";
 import AddQuestionModal from "../modal/question/AddQuestionModal";
 import { useParams } from "react-router-dom";
-import {
-  AllQuestionOfSurvey,
-  CreateQuestion,
-} from "../../redux/actions/QuestionActions";
+import { AllQuestionOfSurvey } from "../../redux/actions/QuestionActions";
 import { Card, message } from "antd";
 import QuestionCard from "../card/QuestionCard";
 import {
@@ -14,13 +11,11 @@ import {
   DELETE_QUESTION_RESET,
   UPDATE_QUESTION_RESET,
 } from "../../redux/constants/QuestionConstants";
-import AddQuestionForm from "../form/AddQuestionForm";
+
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import EmptyComponent from "../empty/EmptyComponent";
 
 const QuestionTabSegment = () => {
-
-
   const getSingleSurvey = useSelector((state) => state.survey.getSingleSurvey);
 
   const [showAddQuestionModal, setShowAddQuestionModal] = useState(false);
@@ -76,7 +71,11 @@ const QuestionTabSegment = () => {
           handleCloseAddQuestionModal={handleCloseAddQuestionModal}
         />
       </div>
-    {getSingleSurvey.loading ? <LoadingSpinner />   : getSingleSurvey.success ?  <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} /> : null} 
+      {getSingleSurvey.loading ? (
+        <LoadingSpinner />
+      ) : getSingleSurvey.success ? (
+        <SurveyCard isDetailsCard={true} survey={getSingleSurvey.survey} />
+      ) : null}
 
       <h6>Sorular</h6>
       <hr />

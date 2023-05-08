@@ -46,7 +46,7 @@ export const DeleteUser = (userId) => async (dispatch) => {
     }
   };
 
-
+// kullanıcının anket favorilerini getir 
 export const GetSurveyFavorites = (userId) => async (dispatch) => {
     try {
       dispatch({
@@ -68,7 +68,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       });
     }
   };
-
+// anketi favorilere ekle 
   export const AddSurveyToFavorite = (userId,surveyId) => async (dispatch) => {
     try {
       dispatch({
@@ -90,7 +90,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
       });
     }
   };
-
+// anketi favorilerden çıkar
   export const RemoveSurveyFromFavorite = (userId,surveyId) => async (dispatch) => {
     try {
       dispatch({
@@ -113,7 +113,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
     }
   };
 
-
+// profil bilgilerini getir
   export const GetProfile = () => async (dispatch) => {
     try {
       dispatch({
@@ -144,7 +144,7 @@ export const GetSurveyFavorites = (userId) => async (dispatch) => {
     }
   };
   
-
+// profili güncelle
   export const UpdateProfile = (user) => async (dispatch) => {
     try {
       dispatch({

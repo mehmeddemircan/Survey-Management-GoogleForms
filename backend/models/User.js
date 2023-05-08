@@ -25,16 +25,18 @@ var userSchema = new mongoose.Schema({
           type: String,
         },
     },
+    // anket refaransı 
     favorites: [{
       type: ObjectId,
       ref: 'Survey'
     }],
+    // şifre yenileme özellikleri
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 },{timestamps : true });
 
 
-// Encrypting password before save
+// Kaydetmeden önce şifreyi hashleme
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
       next();
@@ -43,12 +45,12 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
   });
   
-  // Compare user password
+  // Şifreleri karşılastirma işlemi
   userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
   };
   
-  // Return JWT token
+  // JWT Token alma işlemi 
   userSchema.methods.getJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRATION,
@@ -64,7 +66,7 @@ userSchema.pre("save", async function (next) {
       .update(resetToken)
       .digest("hex");
   
-    // Set token expire date
+    // Reset Token son kullanma tarihi belirleme 
     this.resetPasswordExpire = Date.now() +   30 * 60 * 1000; // 30 min
   
     return resetToken;

@@ -18,7 +18,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import SurveySearchBox from "../components/searchbox/SurveySearchBox";
 import { GetSurveyFavorites } from "../redux/actions/UserActions";
-import { ADD_SURVEY_TO_FAVORITE_RESET, REMOVE_SURVEY_FROM_FAVORITE_RESET } from "../redux/constants/UserConstants";
+import {
+  ADD_SURVEY_TO_FAVORITE_RESET,
+  REMOVE_SURVEY_FROM_FAVORITE_RESET,
+} from "../redux/constants/UserConstants";
 import MetaTitle from "../meta/MetaTitle";
 import { useTranslation } from "react-i18next";
 
@@ -37,15 +40,9 @@ const HomePage = () => {
 
   const getAllSurvey = useSelector((state) => state.survey.getAllSurvey);
 
- 
-
- 
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    
-    
     dispatch(AllSurvey(limit, currentPage));
     if (createSurvey.success) {
       message.success(createSurvey.message);
@@ -65,33 +62,37 @@ const HomePage = () => {
     currentPage,
     createSurvey.success,
     deleteUpdateSurvey.isDeleted,
-    deleteUpdateSurvey.isUpdated
+    deleteUpdateSurvey.isUpdated,
   ]);
 
-   // search survey
-   const [title, setTitle] = useState("");
+  // search survey
+  const [title, setTitle] = useState("");
 
-   const auth = useSelector((state) => state.auth);
- 
-   const addRemoveFavorite = useSelector((state) => state.user.addRemoveFavorite)
+  const auth = useSelector((state) => state.auth);
 
+  const addRemoveFavorite = useSelector(
+    (state) => state.user.addRemoveFavorite
+  );
+    // favori anketleri getirme 
   useEffect(() => {
- 
-        dispatch(GetSurveyFavorites(auth.user._id));
+    dispatch(GetSurveyFavorites(auth.user._id));
     if (addRemoveFavorite.isAdded) {
-      message.success(addRemoveFavorite.message)
-      dispatch({type : ADD_SURVEY_TO_FAVORITE_RESET})
+      message.success(addRemoveFavorite.message);
+      dispatch({ type: ADD_SURVEY_TO_FAVORITE_RESET });
     }
     if (addRemoveFavorite.isRemoved) {
-      message.success(addRemoveFavorite.message)
-      dispatch({type : REMOVE_SURVEY_FROM_FAVORITE_RESET})
+      message.success(addRemoveFavorite.message);
+      dispatch({ type: REMOVE_SURVEY_FROM_FAVORITE_RESET });
     }
-   
-  }, [dispatch, auth,addRemoveFavorite.isAdded,addRemoveFavorite.isRemoved]);
+  }, [dispatch, auth, addRemoveFavorite.isAdded, addRemoveFavorite.isRemoved]);
 
   return (
     <MainLayout>
-      <MetaTitle title="Akınsoft Anket anasayfa" name="anasayfa" content="Akınsoft anket anasayfa" />
+      <MetaTitle
+        title="Akınsoft Anket anasayfa"
+        name="anasayfa"
+        content="Akınsoft anket anasayfa"
+      />
       <h5 className="my-4">Anketler</h5>
       <div className="d-flex justify-content-between align-items-center">
         <InfoBreadcrumb

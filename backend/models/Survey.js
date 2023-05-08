@@ -22,6 +22,7 @@ const surveySchema = new mongoose.Schema(
 
        }
     ],
+    // kullanici referansı 
     createdBy : {
       type : ObjectId ,
       ref : 'User',

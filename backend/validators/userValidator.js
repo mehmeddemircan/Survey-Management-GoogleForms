@@ -3,18 +3,18 @@ const { check, validationResult } = require("express-validator");
 exports.validateRegisterRequest = [
   check("firstname")
     .isLength({ max: 30 })
-    .withMessage("Your first name can not exceed 30 characters"),
+    .withMessage("İsim 30 karakterden fazla olamaz"),
   check("lastname")
     .isLength({ max: 30 })
-    .withMessage("Your lastname can not exceed 30 characters"),
-  check("email").isEmail().withMessage("Valid Email is required"),
+    .withMessage("Soyisim 30 karakterden fazla olamaz"),
+  check("email").isEmail().withMessage("Geçerli bir email giriniz lütfen"),
   // check('password')
   // .isLength({ min: 6 })
   // .withMessage('Password must be at least 6 character long')
 ];
 
 exports.validateLoginRequest = [
-  check("email").isEmail().withMessage("Valid Email is required"),
+  check("email").isEmail().withMessage("Geçerli bir email giriniz lütfen"),
   // check('password')
   // .isLength({ min: 6 })
   // .withMessage('Password must be at least 6 character long')

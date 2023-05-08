@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import GeneralPopover from "../popover/GeneralPopover";
 import FiltersContent from "../popover/content/FiltersContent";
 
+// Filter button 
 const FiltersButton = () => {
   return (
     <Fragment>

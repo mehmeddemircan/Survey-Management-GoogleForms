@@ -14,21 +14,24 @@ const QuestionCard = ({
   responses,
   isDrawerCard,
   question,
-  
 }) => {
   const dispatch = useDispatch();
+
+  // get url id 
   const { id } = useParams();
 
+  // soruyu silme işlemi 
   const handleDeleteQuestion = (questionId) => {
     dispatch(DeleteQuestion(id, questionId));
   };
 
   const [showEditQuestionModal, setShowEditQuestionModal] = useState(false);
-
+  
+  // soruyu güncelle modalı aç 
   const handleShowEditQuestionModal = () => {
     setShowEditQuestionModal(true);
   };
-
+  // soruyu güncelle modalı kapat
   const handleCloseEditQuestionModal = () => {
     setShowEditQuestionModal(false);
   };
@@ -51,6 +54,7 @@ const QuestionCard = ({
         }
         bordered={true}
         extra={
+          //önizleme sorusu veyaa yanıt soruları ise düzenle ve soruyu sil butonları gösterme 
           isDrawerCard || isResponseCard ? null : (
             <>
               <button
@@ -81,7 +85,8 @@ const QuestionCard = ({
             </>
           )
         }
-      >
+      > 
+      {/* yanıtlar da ki sorular da cevapları listele  */}
         {isResponseCard ? (
           <div className="d-flex justify-content-between">
             <div className="d-inline-flex flex-column">
@@ -89,7 +94,7 @@ const QuestionCard = ({
                 <div>{response}</div>
               ))}
             </div>
-
+            {/* çoktan seçmeli ise butonları getir */}
             {question.questionType === "Çoktan Seçmeli" && (
               <CircularProgress
                 question={question}
