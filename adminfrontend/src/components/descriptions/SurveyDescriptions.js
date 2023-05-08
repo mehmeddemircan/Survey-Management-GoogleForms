@@ -36,7 +36,7 @@ const SurveyDescriptions = ({isPreviewCard, survey }) => {
               >
                 <Tag color="#108ee9">
                   {" "}
-                  {survey.createdBy.firstname} {survey.createdBy.lastname}
+                  {survey.createdBy?.firstname} {survey.createdBy?.lastname}
                 </Tag>
               </Descriptions.Item>
             )}

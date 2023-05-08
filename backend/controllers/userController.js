@@ -32,6 +32,7 @@ exports.deleteUser = catchAsyncErrors(async(req,res) => {
   try {
 
     await User.findByIdAndDelete(req.params.id) 
+ 
 
     res.status(200).json({message : 'Kullanici Basariyla silindi'})
   } catch (error) {
